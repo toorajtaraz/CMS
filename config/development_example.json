@@ -1,0 +1,7 @@
+{
+  "LEVEL": "development",
+  "DEBUG": true,
+  "PORT": 2000,
+  "MONGOURI": "mongodb://username:pass/dbName",
+  "PK": "fksdMGa4kKfuq61BpWVakogQiPhGfukKfRwooMOxm7teZKRELCQJqUvhYmR6LWKj9Lx1nS59hKoFPGQDDpNRIMgcEOELGrsvbLv5rWw2lY7K8VF3exBra6oWn66LDrj6bGYt7IMQtMbVg3PwxWBTEPVOCkdHYZWZ"
+}

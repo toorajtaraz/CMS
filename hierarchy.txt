@@ -1,0 +1,17 @@
+in "app" folder =>
+
+./app/example
+├── controllers
+│   ├── delete.js
+│   ├── get.js
+│   ├── index.js
+│   └── create.js
+├── models
+│   └── example.js
+├── router.js
+└── services
+    ├── delete.js
+    ├── get.js
+    └── create.js
+
+you need too add "example" to modules.json!
