@@ -5,9 +5,6 @@ const ajv = new Ajv({allErrors: true})
 module.exports = (schema, data, response) => {
     const valid = ajv.validate(schema, data)
 
-
-    // const {output, errors, failed} = validate(schema, data);
-
     return {
         valid,
         data: data,
