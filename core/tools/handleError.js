@@ -1,6 +1,6 @@
 const fs = require('fs');
 const dateformat = require('dateformat');
-const { error } = require('./response');
+const {error} = require('./response');
 
 // eslint-disable-next-line no-unused-vars
 exports.errorHandler = async (err, req, res, next) => {
@@ -19,5 +19,5 @@ exports.errorHandler = async (err, req, res, next) => {
         `${new Date()}: ${err.stack ? err.stack : err}\n`, 'utf8');
 
     // Send 500 error to client
-    return error(res, code, { en: 'something unexpected happend.' });
+    return error(res, code, {en: 'something unexpected happened.'});
 };
