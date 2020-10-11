@@ -10,7 +10,7 @@ module.exports = (schema, data, response) => {
         data: data,
         errors: ajv.errors,
         response: (response) => error(
-            response, 422, {en: "Error in input validation!", fa: "خطا در اعتبار سنجی داده های ورودی!"}, errors
+            response, 422, {en: "Error in input validation!", fa: "خطا در اعتبار سنجی داده های ورودی!"}, ajv.errors
         ),
     };
 };
