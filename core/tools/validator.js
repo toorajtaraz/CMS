@@ -1,15 +1,16 @@
-const validate = require('@alxgh/validate');
-const { error } = require('./response');
+const Ajv = require('ajv');
+const {error} = require('./response');
+const ajv = new Ajv({allErrors: true})
 
 module.exports = (schema, data, response) => {
-    const { output, errors, failed } = validate(schema, data);
+    const valid = ajv.validate(schema, data)
 
     return {
-        failed,
-        data: output,
-        errors,
+        valid,
+        data: data,
+        errors: ajv.errors,
         response: (response) => error(
-            response, 422, { en: "Error in input validation!", fa: "خطا در اعتبار سنجی داده های ورودی!" }, errors
+            response, 422, {en: "Error in input validation!", fa: "خطا در اعتبار سنجی داده های ورودی!"}, ajv.errors
         ),
     };
 };
