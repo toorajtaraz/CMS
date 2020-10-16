@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('../../../../core/db/mongoose');
 const {Schema} = mongoose;
 
 const timeSchema = new Schema({
