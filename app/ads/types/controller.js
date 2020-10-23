@@ -30,9 +30,10 @@ const typeService = require('./service');
  */
 
 const get = async (req, res, next) => {
+    debug('WTF?')
     const types = await typeService.getTypes();
     debug(types);
-    ok(res, types);
+    return ok(res, types);
 };
 
 module.exports = {
