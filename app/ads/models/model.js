@@ -1,8 +1,8 @@
 const {mongoose} = require('../../../core/db/mongoose');
 
-const userSchema = new mongoose.Schema({
-    name: String
-})
+// const userSchema = new mongoose.Schema({
+//     name: String
+// })
 
 const typeSchema = new mongoose.Schema({
     name: {type: String, required: true},
@@ -16,7 +16,7 @@ const couponSchema = new mongoose.Schema({
     // how many more people can use this
     available: {type: Number, default: 1},
     // people who can't use this
-    exceptions: [{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
+     exceptions: [{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
 })
 
 
@@ -42,14 +42,14 @@ const receiptSchema = new mongoose.Schema({
 });
 
 
-const User = mongoose.model('User', userSchema);
+// const User = mongoose.model('User', userSchema);
 const Type = mongoose.model('Type', typeSchema);
 const Coupon = mongoose.model('Coupon', couponSchema);
 const Ad = mongoose.model('Ad', adSchema);
 const Receipt = mongoose.model('Receipt', receiptSchema);
 
 module.exports = {
-    User,
+ //   User,
     Type,
     Coupon,
     Ad,
