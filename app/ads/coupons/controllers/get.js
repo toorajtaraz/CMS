@@ -8,7 +8,7 @@ const debug = require('debug')('ads:coupons');
  * @apiDescription returns the coupon with the given code
  * @apiName getCouponByCode
  * @apiGroup ads
- * @apiResponseExample response:
+ * @apiSuccessExample response:
  * {
     "status": "ok",
     "message": {
@@ -46,7 +46,7 @@ const getByCode = async (req, res, next) => {
  * @apiDescription returns the coupon with the given ID
  * @apiName getCouponById
  * @apiGroup ads
- * @apiResponseExample response:
+ * @apiSuccessExample response:
  * {
     "status": "ok",
     "message": {
