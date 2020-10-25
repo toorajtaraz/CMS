@@ -2,9 +2,9 @@ const bcrypt = require('bcrypt');
 const passwordSheriff = require('password-sheriff');
 const jwt = require('jsonwebtoken');
 const config = require('config');
-const {PasswordPolicy, charsets} = passwordSheriff;
+const { PasswordPolicy, charsets } = passwordSheriff;
 const saltRounds = 10;
-const {Token} = require('../../app/users/models/token');
+const { Token } = require('../../app/users/models/token');
 const pk = config.get('PK');
 
 module.exports.PasswordPolicy = new PasswordPolicy({
@@ -13,7 +13,7 @@ module.exports.PasswordPolicy = new PasswordPolicy({
     },
     containsAtLeast: {
         atLeast: 2,
-        expressions: [charsets.lowerCase, charsets.upperCase, charsets.numbers]
+        expressions: [ charsets.lowerCase, charsets.upperCase, charsets.numbers ]
     },
 });
 
@@ -55,24 +55,24 @@ async function canAccess(request) {
                 const token_check = await Token.findById(payload.token_id);
                 if (token_check === undefined || token_check === null) {
                     return {
-                        payload: null,
-                        verify: false,
-                    };
+                        payload : null,
+                        verify : false,
+                    };                
                 }
                 return {
                     payload,
-                    verify: true,
+                    verify : true,
                 };
             } catch {
                 return {
-                    payload: null,
-                    verify: false,
+                    payload : null,
+                    verify : false,
                 };
             }
         } else {
             return {
-                payload: null,
-                verify: false,
+                payload : null,
+                verify : false,
             }
         }
     } else {

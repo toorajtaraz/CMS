@@ -1,4 +1,4 @@
-const server = require('./bootstrap/server');
+const server  = require('./bootstrap/server');
 
 server.start()
     .then(() => {

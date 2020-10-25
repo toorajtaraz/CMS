@@ -13,7 +13,7 @@ exports.ok = (response, data, message = {}, status = 200) => {
     response.end();
 };
 
-exports.error = (response, statusCode, message, additionalInfo = null) => {
+exports.error = (response, statusCode, message, additionalInfo=null) => {
     const responseBody = {
         status: 'error',
         message: {

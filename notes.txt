@@ -1,1 +1,0 @@
-use mongodb+srv://<username>:<password>@cluster0.anha2.gcp.mongodb.net/test for cloud database
