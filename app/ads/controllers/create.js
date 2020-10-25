@@ -27,7 +27,7 @@ function validateBody(body) {
  * @apiName createAd
  * @apiGroup ads
  * @apiParam {String} name          Name of the ad
- * @apiParma {String} typeID        Ad's type objectId(must receive it through its API
+ * @apiParam {String} typeID        Ad's type objectId(must receive it through its API
  * @apiParam {String} start         Start date for the ad in YYYY-MM-DD format
  * @apiParam {Number} Duration      duration of the ad in days(between 1 and 90)
  * @apiParam {String} [couponID]    optional coupon ID for discount(you can receive the ID for an specific coupon through its API)
