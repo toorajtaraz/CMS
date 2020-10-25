@@ -5,6 +5,7 @@ const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const { errorHandler } = require('./tools/handleError');
 const express = require('express');
+const identifyUser = require('./middleware/userMiddleware');
 
 
 
@@ -15,6 +16,10 @@ exports.init = (app, router, connection) => {
         createParentPath: true,
     }));
     app.use(cors());
+
+    //TODO if your module needs user auth, add it here
+    app.use('/api/ads',identifyUser);
+
     app.use('/api', router);
     app.get('/apidoc', (req, res) => {
         res.sendFile(path.join(__dirname, '../apidoc/index.html'));
