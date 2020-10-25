@@ -1,7 +1,7 @@
 const {mongoose} = require('../../../core/db/mongoose');
 
 const UserSchema = new mongoose.Schema({
-    username: {type: String, required: true,},
+    username: {type: String, required: true, unique: true},
     password: {type: String, required: true,},
     is_deleted: {type: Boolean, default: false,},
 });
