@@ -19,6 +19,7 @@ exports.init = (app, router, connection) => {
 
     //TODO if your module needs user auth, add it here
     app.use('/api/ads',identifyUser);
+    app.use('/api/posts',identifyUser);
 
     app.use('/api', router);
     app.get('/apidoc', (req, res) => {
