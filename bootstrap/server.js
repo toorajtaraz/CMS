@@ -9,6 +9,7 @@ const app = express();
 const handler = require('../core/app');
 const router = express.Router();
 const { run } = require('../core/db/mongoose');
+const rbd = require('../core/tools/BRD');
 
 const start =  async () => {
     const connection = await run();
@@ -28,5 +29,6 @@ const start =  async () => {
     });
 
     handler.run(app);
+    rbd();
 };
 module.exports = {app, start};
