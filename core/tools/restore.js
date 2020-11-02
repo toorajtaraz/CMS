@@ -21,3 +21,5 @@ const restore = (adminUser, toBeDropped, callbackFunction, restoreFileName, drop
         });
     }
 }
+
+module.exports = restore;
