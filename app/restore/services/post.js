@@ -22,6 +22,7 @@ const addToRestoreQ = async (id, data) => {
     const restore = await Restore.create({
         owner: id,
         dropAll: data.dropAll,
+        state: -1,
         toBeDropped: (data.dropAll) ? null : data.toBeDropped,
     });
     return  restore;
