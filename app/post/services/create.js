@@ -1,5 +1,4 @@
 const models = require('../models/model');
-const moment = require('moment');
 
 const checkAccess = async (id) => {
     blocked = (await models.User.findById(id)).is_blocked;

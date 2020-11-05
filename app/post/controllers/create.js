@@ -32,7 +32,7 @@ const create = async (request, response, next) => {
     const result = validateData(data);
     const user = request.user;
     // check user access (block status)
-    const hasAccess = await service.checkAcceess(user);
+    const hasAccess = await service.checkAccess(user);
     if (!hasAccess){
         return error(response, 403, {
             en: 'action is blocked.',
