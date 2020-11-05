@@ -3,7 +3,7 @@ const ajv = require('ajv')({allErrors: true});
 const service = require('../services/create');
 const validationSchema = require('../schemas/create');
 const debug = require('debug')('post:create');
-const moment = require('moment')
+const moment = require('moment');
 
 
 function validateData(data) {
@@ -29,11 +29,11 @@ function validateData(data) {
 
 const create = async (request, response, next) => {
     const data = request.body;
-    const result = validateData(body);
+    const result = validateData(data);
     const user = request.user;
     // check user access (block status)
-    const userBlocked = await service.checkBlocked(user);
-    if (userBlocked){
+    const hasAccess = await service.checkAcceess(user);
+    if (!hasAccess){
         return error(response, 403, {
             en: 'action is blocked.',
             fa: 'اجازه این عمل وجود ندارد.'
