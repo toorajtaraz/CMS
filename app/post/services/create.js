@@ -1,26 +1,28 @@
 const models = require('../models/model');
+const userModels = require('../../user/models/models');
 
-const checkAccess = async (id) => {
-    blocked = (await models.User.findById(id)).is_blocked;
-    userRole = (await models.UserRole.findById(id).populate('role'));
-    return (userRole.name == 'author' && !blocked);
+const checkAccess = async (username) => {
+    user = (await userModels.User.find({username: username}).populate('role'))[0];
+    return (user.role.name == 'author' && !user.is_blocked);
 }
 
 const create = async (data)=>{
-    let date = new Date().toISOString().split('T')[0]
-    const tags = await Promise.all(data.tags.map(async (tag) => {
+    let date = new Date().toISOString().split('T')[0];
+    await Promise.all(data.tags.map(async (tag) => {
         exists = await models.Tag.findById(tag);
-        if (exists === undefined){
-            tag = new models.Tag({
+        // add tag if not exists
+        if (exists === null){
+            const newTag = new models.Tag({
                 _id : tag, 
                 dateCreated: date,
                 dateModified: date,
             });
+            await newTag.save();
         }
-        return {_id: tag}
+        return tag
     }));
-    data.tags = tags;
-
+    // get author id
+    data.author = (await userModels.User.find({username: data.author}))[0]._id;
     const post = new models.Post({
         title: data.title,
         content: data.content,

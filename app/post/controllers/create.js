@@ -7,7 +7,7 @@ const moment = require('moment');
 
 
 function validateData(data) {
-    const valid =  ajv.validate(validationSchema, body);
+    const valid =  ajv.validate(validationSchema, data);
     if (!valid)
         return {valid: false, error: ajv.errors};
     return {valid: true}
@@ -22,7 +22,7 @@ function validateData(data) {
  * @apiParam {string} title Post title
  * @apiParam {string} content Post content in markdown
  * @apiParam {string} [summary] Post summary
- * @apiParam {string} datePublished Date to publish post
+ * @apiParam {string} datePosted Date to publish post
  * @apiParam {array} [tags] Post tags by id 
  * 
  */
@@ -30,7 +30,8 @@ function validateData(data) {
 const create = async (request, response, next) => {
     const data = request.body;
     const result = validateData(data);
-    const user = request.user;
+    // const user = request.user;
+    const user = request.header('user');
     // check user access (block status)
     const hasAccess = await service.checkAccess(user);
     if (!hasAccess){
@@ -39,22 +40,22 @@ const create = async (request, response, next) => {
             fa: 'اجازه این عمل وجود ندارد.'
         });
     }
-    data.author = user.id;
     // validate data
     if (!result.valid)
-        return error(response, 400, {
-            en: result.error
-        });
+    return error(response, 400, {
+        en: result.error
+    });
     // validate dates
-    let datePublished = moment(data.datePublished, 'YYYY-MM-DD');
-    if (!datePublished.isValid()){
+    let datePosted = moment(data.datePosted, 'YYYY-MM-DD');
+    if (!datePosted.isValid()){
         return error(response, 400, {
             en: 'invalid post date.',
             fa: 'تاریخ پست معتبر نیست.',
         });
     }
-    debug(data);
-    const post = await services.create(data);
+    data.author = user;
+    // debug(data);
+    const post = await service.create(data);
     if (!post) return error(response, 500, {});
     return ok(response, post, {
         en: 'successfully posted.',
