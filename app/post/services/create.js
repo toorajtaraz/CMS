@@ -3,8 +3,8 @@ const moment = require('moment');
 
 const checkAccess = async (id) => {
     blocked = (await models.User.findById(id)).is_blocked;
-    userRole = (await models.UserRole.find({user: id})).role;
-    return (userRole == 1 && !blocked);
+    userRole = (await models.UserRole.findById(id).populate('role'));
+    return (userRole.name == 'author' && !blocked);
 }
 
 const create = async (data)=>{

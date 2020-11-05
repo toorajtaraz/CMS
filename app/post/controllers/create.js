@@ -20,7 +20,7 @@ function validateData(data) {
  * @apiVersion 1.0
  * 
  * @apiParam {string} title Post title
- * @apiParam {string} body Post body in markdown
+ * @apiParam {string} content Post content in markdown
  * @apiParam {string} [summary] Post summary
  * @apiParam {string} datePublished Date to publish post
  * @apiParam {array} [tags] Post tags by id 
