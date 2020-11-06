@@ -27,8 +27,8 @@ const create = async (data)=>{
         title: data.title,
         content: data.content,
         summary: data.summary || null,
-        published: data.published || true,
         datePosted: data.datePosted,
+        published: data.published || true,
         author: data.author,
         tags: data.tags        
         });
