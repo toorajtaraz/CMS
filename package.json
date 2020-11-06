@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -34,7 +35,7 @@
     "mongodb-backup": "^1.6.9",
     "mongodb-restore": "^1.6.2",
     "mongoose": "^5.10.3",
-    "nodemon": "^2.0.4",
+    "nodemon": "^2.0.6",
     "npm": "^6.14.8",
     "password-sheriff": "^1.1.0",
     "zarinpal-checkout": "^0.2.7"
