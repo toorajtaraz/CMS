@@ -23,6 +23,7 @@ const addToRestoreQ = async (id, data) => {
         owner: id,
         dropAll: data.dropAll,
         state: -1,
+        fileName: data.file,
         toBeDropped: (data.dropAll) ? null : data.toBeDropped,
     });
     return  restore;
