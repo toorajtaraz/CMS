@@ -1,4 +1,19 @@
 const { mongoose } = require('../db/mongoose');
+const {Mongoose} = require('mongoose');
+const restoreFilesSchema = new mongoose.Schema({
+    tar: {
+        type: String,
+        required: true,
+    },
+    hasZip: {
+        type: Boolean,
+        default: false,
+    },
+    zip: {
+        type: String,
+        default: '',
+    }
+});
 
 const restoreSchema = new mongoose.Schema({
     toBeDropped: [
@@ -11,7 +26,8 @@ const restoreSchema = new mongoose.Schema({
         default: false
     },
     fileName: {
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'RestoreFiles',
     },
     state: {
         type: Number,
@@ -28,8 +44,11 @@ const restoreSchema = new mongoose.Schema({
 });
 
 const Restore = mongoose.model('Restore', restoreSchema);
+const RestoreFiles = mongoose.model('RestoreFiles', restoreFilesSchema);
 
 module.exports = {
     restoreSchema,
     Restore,
-}
+    restoreFilesSchema,
+    RestoreFiles,
+};

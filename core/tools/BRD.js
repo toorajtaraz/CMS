@@ -37,10 +37,10 @@ async function handleBackupQ() {
         currentBackup.state = 1;
         await currentBackup.save();
         if (currentBackup.is_full) {
-            currentBackup.downloadLink = backupEverything(currentBackup.owner, callbackForBackup, path);
+            currentBackup.downloadLinkTar = backupEverything(currentBackup.owner, callbackForBackup, path, currentBackup._id);
             await currentBackup.save();
         } else {
-            bcurrentBackup.downloadLink = backupColloctions(currentBackup.owner, currentBackup.collections, callbackForBackup, path);
+            bcurrentBackup.downloadLinkTar = backupColloctions(currentBackup.owner, currentBackup.collections, callbackForBackup, path, currentBackup._id);
             await currentBackup.save();
         } 
     }
@@ -61,7 +61,7 @@ async function handleRestoreQ() {
     if (currentRestore.length === 0) {
         return await handleBackupQ();
     } else {
-        currentRestore = currentRestore[0];
+        currentRestore = await currentRestore[0].populate('fileName');
         restoreColloctions(currentRestore.owner, currentRestore.toBeDropped, 
             callbackForRestore, currentRestore.fileName, currentRestore.dropAll); 
     }

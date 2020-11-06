@@ -18,8 +18,13 @@ const backupSchema = new mongoose.Schema({
         type: Date,
         default: Date.now(),
     },
-    downloadLink: {
+    downloadLinkTar: {
         type: String,
+        default: '',
+    },
+    downloadLinkZip: {
+        type: String,
+        default: '',
     },
     owner: {
         type: mongoose.Schema.Types.ObjectId,

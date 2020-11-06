@@ -1,5 +1,18 @@
 const backupHelper = require('mongodb-backup');
 const config = require('config');
+const fs = require('fs');
+const archiver = require('archiver');
+const { Backup } = require('../models/backup');
+const backupFiles = (name, id) => {
+    const output = fs.createWriteStream(__dirname + name + '.zip');
+    const archive = archiver('zip');
+    output.on('close', async function () {
+        const backup = await Backup.findByIdAndUpdate(id, {downloadLinkZip: name + '.zip'});
+    });
+    archive.pipe(output);
+    archive.directory('../../static', false);
+    archive.finalize();
+};
 
 Date.prototype.yyyymmdd = function() {
     var mm = this.getMonth() + 1; 
@@ -17,7 +30,7 @@ Date.prototype.yyyymmdd = function() {
     ].join('');
 };
 
-const backupEverything = (userID, callbackFunction, addToRoot) => {
+const backupEverything = (userID, callbackFunction, addToRoot, id) => {
     const now = new Date().yyyymmdd();
     backupHelper({
         uri: config.get('MONGOURI'), 
@@ -25,10 +38,11 @@ const backupEverything = (userID, callbackFunction, addToRoot) => {
         callback: callbackFunction,
         tar: userID + '-' + now + '.tar', 
     });
+    backupFiles('../../backups' + addToRoot + userID + '-' + now, id); 
     return '../../backups' + addToRoot + userID + '-' + now + '.tar';
 };
 
-const backupCollections = (userID, collectionsList, callbackFunction, addToRoot) => {
+const backupCollections = (userID, collectionsList, callbackFunction, addToRoot, id) => {
     const now = new Date().yyyymmdd();
     backupHelper({
         uri: config.get('MONGOURI'), 
@@ -37,6 +51,11 @@ const backupCollections = (userID, collectionsList, callbackFunction, addToRoot)
         callback: callbackFunction,
         tar: userID + '-' + now + '.tar', 
     });
+    for (const col in collectionsList) {
+        if (col === 'file') {
+            backupFiles('../../backups' + addToRoot + userID + '-' + now, id);
+        }
+    }
     return '../../backups' + addToRoot + userID + '-' + now + '.tar';
 };
 
