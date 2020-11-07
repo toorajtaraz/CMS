@@ -11,7 +11,7 @@ const checkAccess = async(username) =>{
     ));
 };
 
-const remove = async (id, user)=>{
+const remove = async (id)=>{
     const post = await models.Post.findOneAndUpdate(
         {_id: id, is_deleted: false},
         {is_deleted: true}

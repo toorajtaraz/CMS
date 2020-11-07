@@ -74,7 +74,7 @@ const remove = async (request, response, next) => {
             fa: 'آدرس پست وارد شده معتبر نمی‌باشد.'
         })
     }
-    const post = await service.remove(id, user);
+    const post = await service.remove(id);
     return ok(response, post, {
         en: 'Post deleted.',
         fa: 'پست حذف شد.'
