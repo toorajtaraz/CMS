@@ -108,8 +108,6 @@ function validateData(data) {
 
 const create = async (request, response, next) => {
     const data = request.body;
-    const result = validateData(data);
-    // const user = request.user;
     const user = request.header('user');
     // check user access (block status)
     const hasAccess = await service.checkAccess(user);
@@ -120,6 +118,7 @@ const create = async (request, response, next) => {
         });
     }
     // validate data
+    const result = validateData(data);
     if (!result.valid)
     return error(response, 400, {
         en: result.error
