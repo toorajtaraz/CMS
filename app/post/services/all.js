@@ -16,14 +16,17 @@ const all = async (data, user)=>{
     page = data.page || 1;
     size = data.size || 10;
     sortBy = data.sortBy || 'datePosted';
-
+    // used only if user has access to unpublished posts
+    let {published = { $nin: [] }} = data;
+    
+    // check access to unpublished data
     const hasAccess = await checkAccess(user);
 
     const query = {
         is_deleted: false,
-        published: (hasAccess)? {$nin: []} : true ,
-        author: data.author || { $nin: []},
-        tags: (data.tags !== undefined)? { $in: data.tags} : { $nin: []}
+        published: (hasAccess)? published : true ,
+        author: data.author || { $nin: [] },
+        tags: (data.tags !== undefined)? { $in: data.tags } : { $nin: [] }
     };
 
     let pageCount = await models.Post.countDocuments(query);

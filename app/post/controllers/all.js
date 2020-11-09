@@ -21,6 +21,7 @@ function validateData(data) {
  * @apiParam {String} [sortBy="datePosted"] Parameter to sort by
  * @apiParam {String[]} [tags] Tags to filter by
  * @apiParam {String} [author] Author id to filter posts by
+ * @apiParam {Boolean} [published] Published status to filter posts by (only for authorized users)
  * 
  * @apiParamExample Request-Example:
  * {
@@ -98,11 +99,13 @@ const all = async (request, response, next) => {
     const data = request.body;
     // check auth for unpublished posts
     const user = request.header('user');
+    
     const validationRes = validateData(data);
     if (!validationRes.valid)
     return error(response, 400, {
         en: validationRes.error
     });
+
     const result = await service(data, user);
     if (result.posts[0] === undefined) return error(response, 404, {
         en: 'No posts found.',
