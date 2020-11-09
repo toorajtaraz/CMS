@@ -19,31 +19,26 @@ const all = async (data, user)=>{
 
     const hasAccess = await checkAccess(user);
 
-    if(hasAccess){
-        posts = await models.Post.find({
-            is_deleted: false,
-            author: data.author || { $nin: []} ,
-            tags: (data.tags !== undefined)? { $in: data.tags} : { $nin: []}            
-        }, null, {
-            sort: { ['sortBy']: 1 },
-            limit: size,
-            skip: (page - 1) * size
-        }).populate('author', 'username');
-    }
-    // hide unpublished posts from unauthorized users
-    else{
-        posts = await models.Post.find({
-            is_deleted: false,
-            published: true,
-            author: data.author || { $nin: []},
-            tags: (data.tags !== undefined)? { $in: data.tags} : { $nin: []}
-        }, null, {
-            sort: { ['sortBy']: 1 },
-            limit: size,
-            skip: (page - 1) * size
-        }).populate('author', 'username');
-    }
-    return posts;
+    const query = {
+        is_deleted: false,
+        published: (hasAccess)? {$nin: []} : true ,
+        author: data.author || { $nin: []},
+        tags: (data.tags !== undefined)? { $in: data.tags} : { $nin: []}
+    };
+
+    let pageCount = await models.Post.countDocuments(query);
+    pageCount = Math.ceil(pageCount/size);
+
+    const posts = await models.Post.find(query, null, {
+        sort: { ['sortBy']: 1 },
+        limit: size,
+        skip: (page - 1) * size
+    }).populate('author', 'username');
+
+    return {
+        posts: posts,
+        pageCount: pageCount
+    };
 }
 
 module.exports = all;

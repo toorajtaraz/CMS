@@ -2,7 +2,6 @@ const {ok, error} = require('../../../core/tools/response');
 const ajv = require('ajv')({allErrors: true});
 const validationSchema = require('../schemas/all');
 const service = require('../services/all');
-const mongoose = require('mongoose');
 
 function validateData(data) {
     const valid =  ajv.validate(validationSchema, data);
@@ -31,7 +30,8 @@ function validateData(data) {
  *    "author": "5fa514e3bfa0c645fc457884"
  * }
  * 
- * @apiSuccess (200) {Object} result Post information
+ * @apiSuccess (200) {Object[]} result Posts information
+ * @apiSuccess (200) {Number} result.pageCount Page count for current criteria
  * @apiSuccessExample Success-Response:
  *  {
  *     "status": "ok",
@@ -98,17 +98,17 @@ const all = async (request, response, next) => {
     const data = request.body;
     // check auth for unpublished posts
     const user = request.header('user');
-    const result = validateData(data);
-    if (!result.valid)
+    const validationRes = validateData(data);
+    if (!validationRes.valid)
     return error(response, 400, {
-        en: result.error
+        en: validationRes.error
     });
-    const posts = await service(data, user);
-    if (posts[0] === undefined) return error(response, 404, {
+    const result = await service(data, user);
+    if (result.posts[0] === undefined) return error(response, 404, {
         en: 'No posts found.',
         fa: 'پستی یافت نشد.'
     });
-    return ok(response, posts, {});
+    return ok(response, result, {});
 }
 
 module.exports = all;
