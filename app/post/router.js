@@ -1,9 +1,9 @@
 const controller = require('./controllers');
 
-module.exports = (app, router) => {
-    app.post('/posts',controller.create);
-    app.put('/posts/:id',controller.update);
-    app.get('/posts/:id', controller.fetch);
-    app.get('/posts', controller.all);
-    app.delete('/posts/:id', controller.remove);
+module.exports = (router) => {
+    router.post('/posts',controller.create);
+    router.put('/posts/:id',controller.update);
+    router.get('/posts/:id', controller.fetch);
+    router.get('/posts', controller.all);
+    router.delete('/posts/:id', controller.remove);
 };

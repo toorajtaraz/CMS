@@ -20,5 +20,8 @@ module.exports = {
             ],
             "uniqueItems" : true,
         },
+        "published" : {
+            "type": "boolean",
+        },
     }
 }
