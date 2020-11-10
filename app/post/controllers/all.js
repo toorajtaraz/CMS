@@ -11,10 +11,10 @@ function validateData(data) {
 }
 
 /**
- * @api {get} /api/post
- * @apiName all
- * @apiGroup get
- * @apiVersion 1.0
+ * @api {get} /api/post All
+ * @apiName All
+ * @apiGroup Posts
+ * @apiVersion 1.0.0
  * 
  * @apiParam {Number} [page=1] Page number to show
  * @apiParam {Number} [size=10] Number of items per page
@@ -107,6 +107,7 @@ const all = async (request, response, next) => {
     });
 
     const result = await service(data, user);
+    
     if (result.posts[0] === undefined) return error(response, 404, {
         en: 'No posts found.',
         fa: 'پستی یافت نشد.'

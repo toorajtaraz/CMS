@@ -37,7 +37,7 @@ const all = async (data, user)=>{
         limit: size,
         skip: (page - 1) * size
     }).populate('author', 'username');
-
+    
     return {
         posts: posts,
         pageCount: pageCount
