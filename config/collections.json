@@ -3,5 +3,9 @@
     "Backup",
     "Restore",
     "RestoreFiels",
-    "Banned"
+    "Banned",
+    "Post",
+    "Tag",
+    "User",
+    "Role"
 ]
