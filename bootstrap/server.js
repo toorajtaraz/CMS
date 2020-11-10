@@ -10,7 +10,7 @@ const handler = require('../core/app');
 const router = express.Router();
 const { run } = require('../core/db/mongoose');
 const rbd = require('../core/tools/BRD');
-
+const ubd = require('../core/tools/UBD');
 const start =  async () => {
     const connection = await run();
     handler.init(app, router, connection);
@@ -29,6 +29,7 @@ const start =  async () => {
     });
 
     handler.run(app);
-    rbd();
+    rbd.run();
+    ubd();
 };
 module.exports = {app, start};

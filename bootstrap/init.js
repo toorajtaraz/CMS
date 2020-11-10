@@ -5,6 +5,6 @@ const defaultPassword = config.get('DEFAULTPASS');
 
 module.exports = async () => {
     if ((await Settings.find()).length === 0) {
-        await Settings.create({restorePasswordHash: await hashPass(defaultPassword)});
+        await Settings.create({passwordHash: await hashPass(defaultPassword)});
     }
 }
