@@ -22,8 +22,8 @@ const TagSchema = new mongoose.Schema({
 })
 
 
-const Post = mongoose.model('Post', PostSchema)
-const Tag = mongoose.model('Tag', TagSchema)
+const Post = mongoose.model('Post', PostSchema, 'Post');
+const Tag = mongoose.model('Tag', TagSchema, 'Tag');
 
 module.exports = {
     Post,
