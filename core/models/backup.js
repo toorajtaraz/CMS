@@ -32,7 +32,7 @@ const backupSchema = new mongoose.Schema({
     },
 });
 
-const Backup = mongoose.model('Backup', backupSchema);
+const Backup = mongoose.model('Backup', backupSchema, 'Backup');
 
 module.exports = {
     backupSchema,

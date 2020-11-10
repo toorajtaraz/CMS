@@ -16,15 +16,6 @@ const restoreFilesSchema = new mongoose.Schema({
 });
 
 const restoreSchema = new mongoose.Schema({
-    toBeDropped: [
-        {
-            type: String
-        }
-    ],
-    dropAll: {
-        type: Boolean,
-        default: false
-    },
     fileName: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'RestoreFiles',
@@ -43,8 +34,8 @@ const restoreSchema = new mongoose.Schema({
     },
 });
 
-const Restore = mongoose.model('Restore', restoreSchema);
-const RestoreFiles = mongoose.model('RestoreFiles', restoreFilesSchema);
+const Restore = mongoose.model('Restore', restoreSchema, 'Restore');
+const RestoreFiles = mongoose.model('RestoreFiles', restoreFilesSchema, 'RestoreFiles');
 
 module.exports = {
     restoreSchema,

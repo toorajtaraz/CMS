@@ -9,12 +9,12 @@ const settingsSchema = new mongoose.Schema({
         type: Date,
         default: Date.now(),
     },
-    restorePasswordHash: {
+    passwordHash: {
         type: String,
     },
 });
 
-const Settings = mongoose.model('Settings', settingsSchema);
+const Settings = mongoose.model('Settings', settingsSchema, 'Settings');
 
 module.exports = {
     settingsSchema,

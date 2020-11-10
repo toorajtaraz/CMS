@@ -11,7 +11,7 @@ const bannedSchema = new mongoose.Schema({
     },
 });
 
-const Banned = mongoose.model('Banned', bannedSchema);
+const Banned = mongoose.model('Banned', bannedSchema, 'Banned');
 
 module.exports = {
     bannedSchema,
