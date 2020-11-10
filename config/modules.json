@@ -1,5 +1,8 @@
 [
   "ads",
   "user",
-  "post"
+  "post",
+  "backup",
+  "restore",
+  "settings"
 ]

@@ -12,7 +12,7 @@ const identifyUser = async (req, res, next) => {
             },
         });
     }
-    const user = models.User.findOne({username: username, is_deleted: false});
+    const user = await models.User.findOne({username: username, is_deleted: false});
     if (!user) {
         return res.status(401).send({
             status: "error",

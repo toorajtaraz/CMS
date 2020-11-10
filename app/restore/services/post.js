@@ -1,4 +1,4 @@
-const { Restore } = require('../../../core/models/restore');
+const { Restore, RestoreFiles} = require('../../../core/models/restore');
 const { Settings } = require('../../../core/models/settings');
 const { Banned } = require('../../../core/models/banned');
 const auth = require('../../../core/auth/auth');
@@ -14,7 +14,7 @@ const isBanned = async (id) => {
 };
 
 const canAccess = async (password) => {
-    const currentHashPass = (await Settings.findOne()).restorePasswordHash;
+    const currentHashPass = (await Settings.findOne()).passwordHash;
     return await auth.isPassValid(password, currentHashPass); 
 };
 
@@ -29,11 +29,21 @@ const addToRestoreQ = async (id, data) => {
     return  restore;
 };
 
+const createRestoreFile = async (tar, zip=null) => {
+    const rf = {tar: tar};
+    if (zip != null) {
+        rf.hasZip = true;
+        rf.zip = zip;
+    }
+    const restoreFiles = await RestoreFiles.create(rf);
+    return restoreFiles;
+}
 module.exports = {
     addToRestoreQ,
     canAccess,
     banUser,
-    isBanned
+    isBanned,
+    createRestoreFile,
 };
 
 

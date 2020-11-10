@@ -1,16 +1,19 @@
-const backupHelper = require('mongodb-backup');
+const backupHelper = require('./backupRestoreSpawn').backup;
 const config = require('config');
 const fs = require('fs');
 const archiver = require('archiver');
 const { Backup } = require('../models/backup');
 const backupFiles = (name, id) => {
-    const output = fs.createWriteStream(__dirname + name + '.zip');
+    const output = fs.createWriteStream(__dirname + '/' + name + '.zip');
     const archive = archiver('zip');
+    archive.on('error', function(err){
+        console.log(err);
+    });
     output.on('close', async function () {
         const backup = await Backup.findByIdAndUpdate(id, {downloadLinkZip: name + '.zip'});
     });
     archive.pipe(output);
-    archive.directory('../../static', false);
+    archive.directory(__dirname + '/../../static', false);
     archive.finalize();
 };
 
@@ -34,12 +37,12 @@ const backupEverything = (userID, callbackFunction, addToRoot, id) => {
     const now = new Date().yyyymmdd();
     backupHelper({
         uri: config.get('MONGOURI'), 
-        root: __dirname + '/../../backups' + addToRoot,
+        root: __dirname + '/../../backups/' + addToRoot,
         callback: callbackFunction,
-        tar: userID + '-' + now + '.tar', 
+        tar: userID + '-' + now + '.tar',
     });
-    backupFiles('../../backups' + addToRoot + userID + '-' + now, id); 
-    return '../../backups' + addToRoot + userID + '-' + now + '.tar';
+    backupFiles('../../backups/' + addToRoot + userID + '-' + now, id); 
+    return '../../backups/' + addToRoot + userID + '-' + now + '.tar';
 };
 
 const backupCollections = (userID, collectionsList, callbackFunction, addToRoot, id) => {
@@ -49,7 +52,7 @@ const backupCollections = (userID, collectionsList, callbackFunction, addToRoot,
         root: __dirname + '/../../backups' + addToRoot,
         collections: collectionsList,
         callback: callbackFunction,
-        tar: userID + '-' + now + '.tar', 
+        tar: userID + '-' + now + '.tar',
     });
     for (const col in collectionsList) {
         if (col === 'file') {
