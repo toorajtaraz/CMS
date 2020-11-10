@@ -10,9 +10,6 @@ module.exports = {
         "summary" : {
             "type" : "string",
         },
-        "datePosted" : {
-            "type" : "string",
-        },
         "published" : {
             "type" : "boolean",
         },
@@ -25,5 +22,5 @@ module.exports = {
 
         },
     },
-    "required" : ["title", "content", "datePosted", "tags"]
+    "required" : ["title", "content", "tags"]
 }

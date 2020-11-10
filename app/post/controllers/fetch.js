@@ -6,10 +6,10 @@ const mongoose = require('mongoose');
 
 
 /**
- * @api {get} /api/post/:id 
- * @apiName fetch
- * @apiGroup get
- * @apiVersion 1.0
+ * @api {get} /api/post/:id Fetch
+ * @apiName Fetch
+ * @apiGroup Posts
+ * @apiVersion 1.0.0
  * 
  * @apiSuccess (200) {Object} result Post information
  * @apiSuccessExample Success-Response:
