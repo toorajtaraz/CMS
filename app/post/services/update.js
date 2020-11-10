@@ -34,7 +34,10 @@ const update = async (id, data, user)=>{
     // get editor id
     data.editedBy = (await userModels.User.findOne({username: user}))._id ;
     
-    const post = await models.Post.findByIdAndUpdate(id, 
+    const post = await models.Post.findOneAndUpdate({
+        _id: id,
+        is_deleted: false,
+    }, 
         {
         title: data.title,
         content: data.content,

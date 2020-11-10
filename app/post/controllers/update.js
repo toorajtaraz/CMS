@@ -12,10 +12,10 @@ function validateData(data) {
 }
 
 /**
- * @api {put} /api/posts update
- * @apiName update
- * @apiGroup put
- * @apiVersion 1.0
+ * @api {put} /api/posts Update
+ * @apiName Update
+ * @apiGroup Posts
+ * @apiVersion 1.0.0
  * 
  * @apiParam {String} [title] Post title
  * @apiParam {String} [content] Post content in markdown
@@ -28,7 +28,7 @@ function validateData(data) {
  *     "content": "Something radical is going on.",
  *     "summary": "shall we change?",
  *     "title": "A New Era",
- *     "tags": "tech"
+ *     "tags": ["tech"]
  * }
  * @apiSuccess (200) {Object} result Updated post information
  * @apiSuccessExample Success-Response:
@@ -71,6 +71,16 @@ function validateData(data) {
  *     }
  * }
  * @apiError (400) {Object} BadRequest Invalid data
+ * @apiError (404) {Object} NotFound Post not found
+ * @apiErrorExample NotFound
+ * HTTP/1.1 404 NotFound
+ * {
+ *  "status": "error",
+    "message": {
+        "en": "Post not found.",
+        "fa": "پست یافت نشد."
+    }
+ * }
  * 
  */
 
@@ -92,8 +102,14 @@ const update = async (request, response, next) => {
     return error(response, 400, {
         en: result.error
     });
-    // debug(data);
+    
     const post = await service.update(id, data, user);
+
+    if (post === null) return error(response, 404, {
+        en: 'Post not found.',
+        fa: 'پست یافت نشد.'
+    });
+
     return ok(response, post, {
         en: 'successfully updated.',
         fa: 'پست به‌روز شد.',
