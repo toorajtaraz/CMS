@@ -36,9 +36,9 @@ const upload = async (request, response, next) => {
     }
     const { files } = request;
     const now = Date.now();
-    uploadPathTar = __dirname + '/../../../backups/toBeRestored/' + now + '-' +files.tar.name;
+    uploadPathTar = __dirname + '/../../../backups/' + now + '-' +files.tar.name;
     if (files.zip)
-        uploadPathZip = __dirname + '/../../../backups/toBeRestored/' + now + '-' + files.zip.name;
+        uploadPathZip = __dirname + '/../../../backups/' + now + '-' + files.zip.name;
 
     files.tar.mv(uploadPathTar, async function(err) {
         if (err) {

@@ -47,7 +47,7 @@ const restore = (config, _tar=tar) => {
             '--authenticationDatabase=test',
             '--drop',
             '--uri=' + uri,
-            root + '/dump',
+            root + 'dump',
         ]);
         restoreProcess.on('exit', (code, signal) => {
             if (code) {
@@ -60,7 +60,7 @@ const restore = (config, _tar=tar) => {
                 callback(signal);
                 return;
             }
-            fs.rmdir(root + '/dump', { recursive: true, force: true }, callback);
+            fs.rmdir(root + 'dump', { recursive: true, force: true }, callback);
         });
     });
 };

@@ -7,7 +7,7 @@ const fs = require('fs');
 
 const restore = (adminUser, callbackFunction, restoreFileName) => {
     if (restoreFileName.hasZip) {
-        fs.rmdir(__dirname + '/../../static', { recursive: true, force: true }, (err) => {
+        fs.rmdir(__dirname + '/../static', { recursive: true, force: true }, (err) => {
             if (err) {
                 console.log('went wrong');
                 return;
@@ -18,7 +18,7 @@ const restore = (adminUser, callbackFunction, restoreFileName) => {
     }
     restoreHelper({
         uri: config.get('MONGOURI'), 
-        root: __dirname +  '/../../backups/toBeRestored',
+        root: __dirname +  '/../../backups/',
         tar: restoreFileName.tar,
         callback: callbackFunction,
     });

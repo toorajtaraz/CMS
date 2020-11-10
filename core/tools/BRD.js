@@ -5,6 +5,8 @@ const restoreColloctions = require('../tools/restore');
 const { Settings } = require('../models/settings');
 async function  backupRestoreDeamon() {
     console.log('BACKUP/RESTORE deamon running...');
+   // await Backup.deleteMany({});
+   // await Restore.deleteMany({});
     handleBackupQ();
 }
 
@@ -60,11 +62,10 @@ async function handleRestoreQ() {
         console.log('BACKUP/RESTORE deamon has done its duty..')
         return;
     } else {
+        currentRestore[0].state = 1;
+        await currentRestore[0].save();
         currentRestore = await currentRestore[0].populate('fileName').execPopulate();
-        currentRestore.state = 1;
-        await currentRestore.save();
-        restoreColloctions(currentRestore.owner, currentRestore.toBeDropped, 
-            callbackForRestore, currentRestore.fileName, currentRestore.dropAll); 
+        restoreColloctions(currentRestore.owner, callbackForRestore, currentRestore.fileName); 
     }
 }
 
