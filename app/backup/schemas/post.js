@@ -3,5 +3,3 @@ module.exports = {
     'collections.*.name' : ['string', 'length:min,1'],
     'is_full' : 'boolean', 
 };
-
-
