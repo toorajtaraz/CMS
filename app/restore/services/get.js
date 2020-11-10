@@ -6,9 +6,6 @@ const getAll = async (params, size, page) => {
     if (params.state != undefined) {
         filter.state = params.state;
     }
-    if (params.dropAll != undefined) {
-        filter.dropAll = params.dropAll;
-    }
     if (params.s_date != undefined) {
         if (params.e_date != undefined) {
             filter.date = { $gt : params.s_date , $lt : params.e_date };
@@ -33,9 +30,6 @@ const countAll = async (params) => {
     const filter = {};
     if (params.state != undefined) {
         filter.state = params.state;
-    }
-    if (params.dropAll != undefined) {
-        filter.dropAll = params.dropAll;
     }
     if (params.s_date != undefined) {
         if (params.e_date != undefined) {
