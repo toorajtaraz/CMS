@@ -12,7 +12,7 @@ const identifyUser = require('./middleware/userMiddleware');
 exports.init = (app, router, connection) => {
     app.use(bodyParser.json())
         .use(bodyParser.urlencoded({extended:false}));
-    app.use(fileUpload({
+    app.use('/api/restore/upload' ,fileUpload({
         createParentPath: true,
     }));
     app.use(cors());
