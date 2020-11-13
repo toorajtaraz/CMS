@@ -14,7 +14,6 @@ function validateData(data) {
  * @api {get} /api/post All
  * @apiName All
  * @apiGroup Posts
- * @apiVersion 1.0.0
  * 
  * @apiParam {Number} [page=1] Page number to show
  * @apiParam {Number} [size=10] Number of items per page
