@@ -10,17 +10,12 @@ module.exports = {
         "summary" : {
             "type" : "string",
         },
-        "published" : {
-            "type" : "boolean",
-        },
         "tags" : {
             "type" : "array",
             "items" : [
                 { "type" : "string" },
             ],
-            "uniqueItems" : true,
-
         },
     },
-    "required" : ["title", "content", "tags"]
-}
+    "required" : ["title", "content"],
+};

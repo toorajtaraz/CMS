@@ -17,9 +17,10 @@ module.exports = {
             "type" : "array",
             "items" : [
                 { "type" : "string" },
-            ],
-            "uniqueItems" : true,
-
+            ]
+        },
+        "overwrite" : {
+            "type": "boolean"
         },
     }
 }

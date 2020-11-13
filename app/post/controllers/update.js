@@ -20,8 +20,8 @@ function validateData(data) {
  * @apiParam {String} [title] Post title
  * @apiParam {String} [content] Post content in markdown
  * @apiParam {String} [summary] Post summary
- * @apiParam {Boolean} [published] Publish Status
  * @apiParam {String[]} [tags] Post tags by id 
+ * @apiParam {Boolean} [overwrite=false] Whether to overwrite tags (replace or delete previous taglist)
  * 
  * @apiParamExample Request-Example:
  *{
