@@ -20,7 +20,6 @@ function validateData(data) {
  * @apiParam {String} title Post title
  * @apiParam {String} content Post content in markdown
  * @apiParam {String} [summary=null] Post summary
- * @apiParam {Boolean} [published=true] Publish Status
  * @apiParam {String[]} tags Post tags by id 
  * 
  * @apiParamExample Request-Example:
@@ -28,7 +27,7 @@ function validateData(data) {
  *  "title": "Lorem",
  *  "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus interdum quis lacus in laoreet. Nunc euismod in dolor in posuere. Interdum et malesuada fames ac ante ipsum primis in faucibus. Quisque fermentum justo neque.",
  *  "summary": "a few words of summary",
- *  "published": true,
+ *  "published": false,
  *  "tags": [
  *      "tag1",
  *      "tag2"
