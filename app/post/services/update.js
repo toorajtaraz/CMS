@@ -10,16 +10,22 @@ const checkAccess = async (username) => {
 }
 
 const update = async (id, data, user)=>{
-    data.dateUpdated = new Date().toISOString().split('T')[0];
+    date = new Date().toISOString().split('T')[0];
     if(data.tags != undefined)
-    {    
+    {   
+        if(data.overwrite) {
+            // ensure unique tags if it's overwriting
+            data.tags = data.tags.filter((val, index, self) => {
+                return self.indexOf(val) === index;
+            });
+        }
         await Promise.all(data.tags.map(async (tag) => {
             const exists = await models.Tag.findById(tag);
             // add tag if not exists
             if (exists === null){
                 const newTag = new models.Tag({
                     _id : tag, 
-                    dateupdated: date,
+                    dateCreated: date,
                     dateModified: date,
                 });
                 await newTag.save();
@@ -30,6 +36,8 @@ const update = async (id, data, user)=>{
     else{
         data.tags = [];
     }
+
+    const tags = (data.overwrite)? {tags: data.tags} : {$addToSet: {tags: {$each: data.tags}}};
     
     // get editor id
     data.editedBy = (await userModels.User.findOne({username: user}))._id ;
@@ -44,8 +52,8 @@ const update = async (id, data, user)=>{
         summary: data.summary,
         published: data.published,
         $push: {editedBy: data.editedBy},
-        $addToSet: {tags: {$each: data.tags}},
-        dateUpdated: data.dateUpdated,
+        ...tags,
+        dateUpdated: date,
     },
     {
         new: true,
