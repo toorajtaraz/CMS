@@ -15,7 +15,6 @@ function validateData(data) {
  * @api {post} /api/posts Create
  * @apiName Create
  * @apiGroup Posts
- * @apiVersion 1.0.0
  * 
  * @apiParam {String} title Post title
  * @apiParam {String} content Post content in markdown
