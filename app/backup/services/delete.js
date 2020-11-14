@@ -5,19 +5,19 @@ const possible = async (id, bId) => {
     if (!backup) {
         return {
             possible: false,
-            log: 'backup does not exist!',
+            log: {en :'backup does not exist!', fa:'پشتیبان گیری پیدا نشد'},
         };
     }
     if (backup.state != 0) {
         return {
             possible: false,
-            log: 'backup has already started!',
+            log: {en:'current state can not be canceled', fa:'شرایط فعلی قابل کنسل شدن نیست'},
         };        
     }
     if (backup.owner.toString() != id) {
         return {
             possible: false,
-            log: 'you do not own it!',
+            log: {en: 'you do not own it!', fa:'این پشتیبان گیری به شما تعلق ندارد'},
         }
     }
     return {
