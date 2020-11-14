@@ -2,7 +2,7 @@ const { ok, error } = require('../../../core/tools/response');
 const deleteService = require('../services/delete');
 
 /**
- * @api {delete} /api/restore/:id Requests canceling a request
+ * @api {delete} /api/restore/:id Requests canceling a restore
  * @apiName CancelRestore
  * @apiGroup restore
  * @apiSuccessExample success_canceling:
