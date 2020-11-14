@@ -3,7 +3,7 @@ const validator = require('../../../core/tools/validator');
 const postService = require('../services/post');
 const postSchema = require('../schemas/post');
 /**
- * @api {post} /api/restore request adding a request to restore Q.
+ * @api {post} /api/restore request adding a restore to restore Q
  * @apiName addToRestoreQ
  * @apiDescription it uses your provided file id to create a restore and then add it to Q. 0 or -1 for status means your restore has not yet been initiated, other negetive numbers mean failiure and 1 means in progress and finally 2 means finished successfully! and at last you should know that you only have 3 chances for getting the password wrong, if you exceed your limit you get banned and you should wait a few minutes to get unblocked!
  * @apiGroup restore
