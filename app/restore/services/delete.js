@@ -5,19 +5,19 @@ const possible = async (id, bId) => {
     if (!restore) {
         return {
             possible: false,
-            log: 'restore does not exist!',
+            log: {en:'restore does not exist!', fa:'بازنشانی پیدا نشد'},
         };
     }
     if (restore.state != -1) {
         return {
             possible: false,
-            log: 'restore has already started!',
+            log: {en:'current state can not be canceled', fa:'شرایط فعلی قابل کنسل شدن نیست'},
         };
     }
     if (restore.owner.toString() != id) {
         return {
             possible: false,
-            log: 'you do not own it!',
+            log: {en:'you do not own it!', fa:'بازنشانی به شما تعلق ندارد'},
         }
     }
     return {
