@@ -10,36 +10,36 @@ const postSchema = require('../schemas/post');
  * @apiParam {String} file file id you get from upload endpoint.
  * @apiParam {String} password password min 6 characters (settings master password)
  * @apiSuccessExample {json} success-response:
-    {
-        "status": "ok",
-        "message": {
-            "en": "restore successfully added to restore Q",
-            "fa": "درخواست موفقیت آمیز بود"
-        },
-        "result": {
-            "state": -1,
-            "date": "2020-11-10T13:09:09.926Z",
-            "_id": "5faa91425953e633c968637a",
-            "owner": "5fa94a1f11bd6c404245de88",
-            "fileName": "5faa91345953e633c9686379"
-        }
+{
+    "status": "ok",
+    "message": {
+        "en": "restore successfully added to restore Q",
+        "fa": "بازنشانی با موفقیت به صف افزوده شد"
+    },
+    "result": {
+        "state": -1,
+        "date": "2020-11-14T19:38:22.143Z",
+        "_id": "5fb03234b125353203468aff",
+        "owner": "5faafe179d8f4f684c3543d3",
+        "fileName": "5faa91345953e633c9686379"
     }
+}
  * @apiErrorExample wrongPassword:
-    {
-        "status": "error",
-        "message": {
-            "en": "provided password was not correct.",
-            "fa": "درخواست موفقیت آمیز نبود!"
-        }
+{
+    "status": "error",
+    "message": {
+        "en": "provided password was not correct.",
+        "fa": "رمز عبور نا درست بود"
     }
+}
  * @apiErrorExample toManyAttempt:
-    {
-        "status": "error",
-        "message": {
-            "en": "slow down buddy :)",
-            "fa": "درخواست موفقیت آمیز نبود!"
-        }
+{
+    "status": "error",
+    "message": {
+        "en": "slow down buddy :)",
+        "fa": "ای ساربان آهسته ران"
     }
+}
     */
 
 
@@ -47,10 +47,10 @@ const postSchema = require('../schemas/post');
 const addToRestoreQ = async (request, response, next) => {
     if (request.user.attempts === 3) {
         await postService.banUser(request.user._id);
-        return error(response, 429, { en: 'slow down buddy :)' });
+        return error(response, 429, { en: 'slow down buddy :)', fa: 'ای ساربان آهسته ران'});
     }
     if (await postService.isBanned(request.user._id)) {
-        return error(response, 429, { en: 'slow down buddy :)' });
+        return error(response, 429, { en: 'slow down buddy :)', fa: 'ای ساربان آهسته ران'});
     }
     const validate = validator(postSchema, request.body);
 
@@ -60,7 +60,7 @@ const addToRestoreQ = async (request, response, next) => {
     if ((await postService.canAccess(validate.data.password)) === false) {
         request.user.attempts += 1;
         await request.user.save();
-        return error(response, 400, { en: 'provided password was not correct.' });
+        return error(response, 400, { en: 'provided password was not correct.', fa: 'رمز عبور نا درست بود'});
     } else if (request.user.attempts > 0) {
         request.user.attempts = 0;
         await request.user.save();
@@ -70,7 +70,7 @@ const addToRestoreQ = async (request, response, next) => {
     delete createdRestore.__v;
     return ok(response, createdRestore, {
         en: 'restore successfully added to restore Q',
-        fa: '',
+        fa: 'بازنشانی با موفقیت به صف افزوده شد',
     }, 200);
 };
 

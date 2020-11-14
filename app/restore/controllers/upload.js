@@ -12,7 +12,7 @@ const postService = require('../services/post');
         "status": "ok",
         "message": {
             "en": "successfully uploaded!",
-            "fa": "درخواست موفقیت آمیز بود"
+            "fa": "با موفقیت آپلود شد"
         },
         "result": {
             "id": "5faa8f74cb396931ee277f05"
@@ -23,7 +23,7 @@ const postService = require('../services/post');
         "status": "error",
         "message": {
             "en": "tar file (or possibly no file) were uploaded",
-            "fa": "درخواست موفقیت آمیز نبود!"
+            "fa": "فایل الزامی آپلود نشده"
         }
     } 
     */
@@ -32,7 +32,7 @@ const upload = async (request, response, next) => {
     let uploadPathZip = '';
     console.log(request.body);
     if (!request.files || !request.files.tar) {
-        return error(response, 400, { en: 'tar file (or possibly no file) were uploaded' });
+        return error(response, 400, { en: 'tar file (or possibly no file) were uploaded', fa: 'فایل الزامی آپلود نشده'});
     }
     const { files } = request;
     const now = Date.now();
@@ -52,7 +52,7 @@ const upload = async (request, response, next) => {
                 const restoreFile = await postService.createRestoreFile(now + '-' +files.tar.name, uploadPathZip); 
                 return ok(response, {id: restoreFile._id}, {
                     en: 'successfully uploaded!',
-                    fa: '',
+                    fa: 'با موفقیت آپلود شد',
                 }, 200);
             });
         } 
@@ -60,7 +60,7 @@ const upload = async (request, response, next) => {
             const restoreFile = await postService.createRestoreFile(now + '-' +files.tar.name);
             return ok(response, {id: restoreFile._id}, {
                 en: 'successfully uploaded!',
-                fa: '',
+                fa: 'با موفقیت آپلود شد',
             }, 200);
         }
     });
