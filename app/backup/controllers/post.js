@@ -3,7 +3,7 @@ const validator = require('../../../core/tools/validator');
 const postService = require('../services/post');
 const postSchema = require('../schemas/post');
 /**
- * @api {post} /api/backup request adding a backup to backup Q.
+ * @api {post} /api/backup request adding a backup to backup Q
  * @apiName addToBackupQ
  * @apiDescription it creates a backup and then add it to Q. 0 for status means your backup has not yet been initiated, other negetive numbers mean failiure and 1 means in progress and finally 2 means finished successfully! 
  * @apiGroup backup
