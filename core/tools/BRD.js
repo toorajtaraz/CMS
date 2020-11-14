@@ -5,8 +5,6 @@ const restoreColloctions = require('../tools/restore');
 const { Settings } = require('../models/settings');
 async function  backupRestoreDeamon() {
     console.log('BACKUP/RESTORE deamon running...');
-   // await Backup.deleteMany({});
-   // await Restore.deleteMany({});
     handleBackupQ();
 }
 
