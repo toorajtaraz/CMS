@@ -7,22 +7,23 @@ const identifyUser = async (req, res, next) => {
         return res.status(401).send({
             status: "error",
             message: {
-                en: 'WHO ARE YOU?',
-                fa: "هو آر یو؟",
+                en: 'user not specified',
+                fa: "کابر نامشخص",
             },
         });
     }
-    const user = await models.User.findOne({username: username, is_deleted: false});
+    const user = await models.User.findOne({username: username, is_deleted: false}).populate('role');
     if (!user) {
         return res.status(401).send({
             status: "error",
             message: {
-                en: 'YOU DO NOT EXIST!',
-                fa: "",
+                en: 'user nonexistent',
+                fa: "کاربر ناموجود",
             },
         })
     }
     req.user = user;
+    req.user.role = user.role.name;
     next();
 };
 

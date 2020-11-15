@@ -11,6 +11,9 @@ module.exports = {
             "minLength":6,
             "maxLength":60,
         },
+        "role":{
+            "type": "string",
+        }
     },
-    "required": ["username", "password"]
+    "required": ["username", "password", "role"]
 }
