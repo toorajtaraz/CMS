@@ -7,8 +7,8 @@ const identifyUser = async (req, res, next) => {
         return res.status(401).send({
             status: "error",
             message: {
-                en: 'WHO ARE YOU?',
-                fa: "هو آر یو؟",
+                en: 'user not specified',
+                fa: "کابر نامشخص",
             },
         });
     }
@@ -17,8 +17,8 @@ const identifyUser = async (req, res, next) => {
         return res.status(401).send({
             status: "error",
             message: {
-                en: 'YOU DO NOT EXIST!',
-                fa: "",
+                en: 'user nonexistent',
+                fa: "کاربر ناموجود",
             },
         })
     }
