@@ -10,4 +10,5 @@ module.exports = (router) => {
     router.get('/ads',adController.get);
     router.get('/ads/pay/:id', adController.requestPayment);
     router.get('/ads/verifyPayment/:id',adController.verifyPayment);
+    router.post('ads/types', typesController.create);
 };
