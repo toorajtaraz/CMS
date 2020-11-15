@@ -12,7 +12,7 @@ const identifyUser = async (req, res, next) => {
             },
         });
     }
-    const user = await models.User.findOne({username: username, is_deleted: false});
+    const user = await models.User.findOne({username: username, is_deleted: false}).populate('role');
     if (!user) {
         return res.status(401).send({
             status: "error",
@@ -23,6 +23,7 @@ const identifyUser = async (req, res, next) => {
         })
     }
     req.user = user;
+    req.user.role = user.role.name;
     next();
 };
 
