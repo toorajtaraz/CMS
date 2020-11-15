@@ -36,6 +36,16 @@ const get = async (req, res, next) => {
     return ok(res, types);
 };
 
+const create = async (req, res, next) => {
+    const name = req.body.name;
+    const cost = req.body.cost;
+    if (name === undefined || cost === undefined || !Number.isInteger(cost))
+        return error(res, 400, {en: 'invalid parameters', fa: "ورودی مورد قبول نیست"});
+    const type = await typeService.createType(name, cost);
+    return ok(res,type,{en:"type created", fa: "type created"});
+}
+
 module.exports = {
-    get
+    get,
+    create,
 };

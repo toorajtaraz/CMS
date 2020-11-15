@@ -42,14 +42,12 @@ const receiptSchema = new mongoose.Schema({
 });
 
 
-// const User = mongoose.model('User', userSchema);
-const Type = mongoose.model('Type', typeSchema);
-const Coupon = mongoose.model('Coupon', couponSchema);
-const Ad = mongoose.model('Ad', adSchema);
-const Receipt = mongoose.model('Receipt', receiptSchema);
+const Type = mongoose.model('Type', typeSchema,'Type');
+const Coupon = mongoose.model('Coupon', couponSchema,'Coupon');
+const Ad = mongoose.model('Ad', adSchema,'Ad');
+const Receipt = mongoose.model('Receipt',receiptSchema, 'Receipt');
 
 module.exports = {
- //   User,
     Type,
     Coupon,
     Ad,
