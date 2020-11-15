@@ -15,7 +15,7 @@ const PostSchema = new mongoose.Schema({
 
 const TagSchema = new mongoose.Schema({
     // title: {type: String, required: true},
-    _id: {type: String, unique: true},
+    _id: {type: String},
     dateCreated: {type: String, required: true},
     dateModified: {type: String},
     is_deleted: {type: Boolean, default: false},
