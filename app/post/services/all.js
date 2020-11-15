@@ -4,7 +4,7 @@ const userModels = require('../../user/models/models');
 const checkAccess = async(username) =>{
     user = (await userModels.User.findOne({username: username}).populate('role'));
     return (
-        user !== undefined && (
+        user.role !== undefined && (
         user.role.name == 'author' || 
         user.role.name == 'admin' || 
         user.role.name == 'editor' && 
@@ -33,11 +33,10 @@ const all = async (data, user)=>{
     pageCount = Math.ceil(pageCount/size);
 
     const posts = await models.Post.find(query, null, {
-        sort: { ['sortBy']: 1 },
+        sort: { [sortBy]: 1 },
         limit: size,
         skip: (page - 1) * size
     }).populate('author', 'username');
-    
     return {
         posts: posts,
         pageCount: pageCount
