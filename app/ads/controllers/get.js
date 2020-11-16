@@ -7,7 +7,7 @@ const debug = require('debug')('ads:get');
  * @apiDescription retrieves all ads
  * @apiName getAds
  * @apiGroup ads
- * @apiSuccessExample {json} success-responce:
+ * @apiSuccessExample {json} success-response:
  * {
     "status": "ok",
     "message": {
