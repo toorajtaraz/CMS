@@ -22,11 +22,11 @@ const search = async (data, user)=>{
     const hasAccess = await checkAccess(user);
 
     const query = {
-        is_deleted: false,
+        // is_deleted: false,
         $text: { $search: data.searchTerms },
-        published: (hasAccess)? published : true,
-        author: data.author || { $nin: [] },
-        tags: (data.tags !== undefined)? { $in: data.tags } : { $nin: [] },
+        // published: (hasAccess)? published : true,
+        // author: data.author || { $nin: [] },
+        // tags: (data.tags !== undefined)? { $in: data.tags } : { $nin: [] },
     };
 
     let pageCount = await models.Post.countDocuments(query);
@@ -41,7 +41,7 @@ const search = async (data, user)=>{
             skip: (page - 1) * size
     })
     .sort( { score: { $meta: "textScore" } } );
-    
+    console.log(query);
     return {
         posts: posts,
         pageCount: pageCount
