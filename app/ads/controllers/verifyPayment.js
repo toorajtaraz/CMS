@@ -7,7 +7,6 @@ const services = require('../services/verifyPayment');
  * @apiName verifyPayment
  * @apiDescription verify Payment: send the ad is to this endpoint to check if it's paid
  * @apiGroup ads
-}
  */
 
 const verifyPayment = async (req, res, next) => {
