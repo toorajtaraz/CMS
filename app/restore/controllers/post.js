@@ -2,6 +2,7 @@ const { ok, error } = require('../../../core/tools/response');
 const validator = require('../../../core/tools/validator');
 const postService = require('../services/post');
 const postSchema = require('../schemas/post');
+const { increaseAttempts } = require('../../user/services/attempts');
 /**
  * @api {post} /api/restore request adding a restore to restore Q
  * @apiName addToRestoreQ
@@ -58,12 +59,10 @@ const addToRestoreQ = async (request, response, next) => {
         return validate.response(response);
     }
     if ((await postService.canAccess(validate.data.password)) === false) {
-        request.user.attempts += 1;
-        await request.user.save();
+        await increaseAttempts(request.user._id, request.user.attempts);
         return error(response, 400, { en: 'provided password was not correct.', fa: 'رمز عبور نا درست بود'});
     } else if (request.user.attempts > 0) {
-        request.user.attempts = 0;
-        await request.user.save();
+        await increaseAttempts(request.user._id, -1);
     }
     let createdRestore = await postService.addToRestoreQ(request.user._id, validate.data);
     createdRestore = createdRestore.toObject();
