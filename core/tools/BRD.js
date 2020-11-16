@@ -1,6 +1,6 @@
 const { Backup } = require('../models/backup');
 const { Restore } = require('../models/restore');
-const { backupColloctions, backupEverything } = require('../tools/backup');
+const { backupCollections, backupEverything } = require('../tools/backup');
 const restoreColloctions = require('../tools/restore');
 const { Settings } = require('../models/settings');
 async function  backupRestoreDeamon() {
@@ -9,6 +9,7 @@ async function  backupRestoreDeamon() {
 }
 
 async function callbackForBackup(err=null) {
+    console.log("im beign called");
     const onGoingBackup = await Backup.findOne({state: 1});
     onGoingBackup.state = err ? -10 : 2;
     await onGoingBackup.save();
@@ -42,7 +43,7 @@ async function handleBackupQ() {
             currentBackup.downloadLinkTar = backupEverything(currentBackup.owner, callbackForBackup, path, currentBackup._id);
             await currentBackup.save();
         } else {
-            bcurrentBackup.downloadLinkTar = backupColloctions(currentBackup.owner, currentBackup.collections, callbackForBackup, path, currentBackup._id);
+            currentBackup.downloadLinkTar = backupCollections(currentBackup.owner, currentBackup.collections, callbackForBackup, path, currentBackup._id);
             await currentBackup.save();
         } 
     }

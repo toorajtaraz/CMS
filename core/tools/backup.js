@@ -35,31 +35,33 @@ Date.prototype.yyyymmdd = function() {
 
 const backupEverything = (userID, callbackFunction, addToRoot, id) => {
     const now = new Date().yyyymmdd();
+    const nowmill = Date.now();
     backupHelper({
         uri: config.get('MONGOURI'), 
         root: __dirname + '/../../backups/' + addToRoot,
         callback: callbackFunction,
-        tar: userID + '-' + now + '.tar',
+        tar: userID + '-' + nowmill + '-' + now + '.tar',
     });
-    backupFiles('../../backups/' + addToRoot + userID + '-' + now, id); 
-    return '../../backups/' + addToRoot + userID + '-' + now + '.tar';
+    backupFiles('../../backups/' + addToRoot + userID + '-' + nowmill + '-' + now, id); 
+    return '../../backups/' + addToRoot + userID + '-' + nowmill + '-' + now + '.tar';
 };
 
 const backupCollections = (userID, collectionsList, callbackFunction, addToRoot, id) => {
     const now = new Date().yyyymmdd();
+    const nowmill = Date.now();
     backupHelper({
         uri: config.get('MONGOURI'), 
-        root: __dirname + '/../../backups' + addToRoot,
+        root: __dirname + '/../../backups/' + addToRoot,
         collections: collectionsList,
         callback: callbackFunction,
-        tar: userID + '-' + now + '.tar',
+        tar: userID + '-' + nowmill + '-' + now + '.tar',
     });
     for (const col in collectionsList) {
         if (col === 'file') {
-            backupFiles('../../backups' + addToRoot + userID + '-' + now, id);
+            backupFiles('../../backups/' + addToRoot + userID + '-' + nowmill + '-' + now, id);
         }
     }
-    return '../../backups' + addToRoot + userID + '-' + now + '.tar';
+    return '../../backups/' + addToRoot + userID + '-' + nowmill + '-' + now + '.tar';
 };
 
 module.exports = {
