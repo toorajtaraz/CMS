@@ -9,7 +9,6 @@ async function  backupRestoreDeamon() {
 }
 
 async function callbackForBackup(err=null) {
-    console.log("im beign called");
     const onGoingBackup = await Backup.findOne({state: 1});
     onGoingBackup.state = err ? -10 : 2;
     await onGoingBackup.save();
