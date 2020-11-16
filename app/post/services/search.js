@@ -34,13 +34,13 @@ const search = async (data, user)=>{
 
     const posts = await models.Post.find(query, 
         {
-            score: { $meta: "textScore" },
+            // score: { $meta: "textScore" },
         },
         {
             limit: size,
             skip: (page - 1) * size
     })
-    .sort( { score: { $meta: "textScore" } } );
+    // .sort( { score: { $meta: "textScore" } } );
     console.log(query);
     return {
         posts: posts,
