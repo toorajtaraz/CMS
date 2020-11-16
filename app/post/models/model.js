@@ -21,19 +21,19 @@ const TagSchema = new mongoose.Schema({
     dateModified: {type: String},
     is_deleted: {type: Boolean, default: false},
 });
-
+PostSchema.set('autoIndex', false)
 PostSchema.index({
-    // title: "text",
-    // content: "text",
-    // summary: "text",
-    '$**': 'text'
+    title: "text",
+    content: "text",
+    summary: "text",
+    // '$**': 'text'
 },
-// {
-//     weight: {
-//         title: 3, content: 1, summary: 2
-//     },
-//     name: "TextIndex"
-// }
+{
+    weight: {
+        title: 3, content: 1, summary: 2
+    },
+    name: "TextIndex"
+}
 );
 
 
