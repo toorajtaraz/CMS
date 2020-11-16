@@ -8,4 +8,5 @@ module.exports = (router) => {
     router.get('/posts', controller.all);
     router.delete('/posts/:id', controller.remove);
     router.get('/tags', tagController.all);
+    router.post('/posts/search/', controller.search);
 };
