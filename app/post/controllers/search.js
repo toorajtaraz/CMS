@@ -1,6 +1,6 @@
 const {ok, error} = require('../../../core/tools/response');
 const ajv = require('ajv')({allErrors: true});
-// const validationSchema = require('../schemas/all');
+const validationSchema = require('../schemas/search');
 const service = require('../services/search');
 
 function validateData(data) {
@@ -11,87 +11,78 @@ function validateData(data) {
 }
 
 /**
- * @api {get} /api/posts All
- * @apiName All
+ * @api {post} /api/posts/search/ Search
+ * @apiName Search
  * @apiGroup Posts
  * 
  * @apiParam {Number} [page=1] Page number to show
  * @apiParam {Number} [size=10] Number of items per page
- * @apiParam {String} [sortBy="datePosted"] Parameter to sort by
- * @apiParam {String[]} [tags] Tags to filter by
- * @apiParam {String} [author] Author id to filter posts by
+ * @apiParam {String} searchTerms Phrase or terms to search by
+ * @apiParam {String[]} [tags] Tags to filter
+ * @apiParam {String} [author] Author id to filter posts
  * @apiParam {Boolean} [published] Published status to filter posts by (only for authorized users)
  * 
  * @apiParamExample Request-Example:
  * {
  *    "page": 2,
  *    "size": 3,
- *    "tags": [ "tech", "tag1"],
- *    "author": "5fa514e3bfa0c645fc457884"
+ *    "tags": [ "برچسب" ],
+ *    "searchTerms": "سلام زندگی"
  * }
  * 
- * @apiSuccess (200) {Object[]} result Posts information
+ * @apiSuccess (200) {Object[]} result.posts Posts information
  * @apiSuccess (200) {Number} result.pageCount Page count for current criteria
  * @apiSuccessExample Success-Response:
- *  {
+ * {
  *     "status": "ok",
  *     "message": {
- *         "en": "Request was successful",
- *         "fa": "درخواست موفقیت آمیز بود"
+ *         "en": "Search results:",
+ *         "fa": "نتیجه جست‌وجو:"
  *     },
- *     "result": [
- *         {
- *             "published": true,
- *             "editedBy": [],
- *             "tags": [
- *                 "tag1",
- *                 "tag2"
- *             ],
- *             "is_deleted": false,
- *             "_id": "5fa4720f874c045138412ffa",
- *             "title": "Lorem",
- *             "content": "ipsum",
- *             "summary": "summ",
- *             "datePosted": "2020-11-08",
- *             "author": {
- *                 "_id": "5fa44925d9d2fe2c84d6d18a",
- *                 "username": "jdoe"
- *             },
- *             "__v": 0
- *         },
- *         {
- *             "published": true,
- *             "editedBy": [],
- *             "tags": [
- *                 "tag1",
- *                 "tag2"
- *             ],
- *             "is_deleted": false,
- *             "_id": "5fa5b8d39630ff57c4638e96",
- *             "title": "Lorem",
- *             "content": "Interdum et malesuada fames ac ante ipsum primis in faucibus. Quisque fermentum justo neque.",
- *             "summary": "a few words of summary",
- *             "datePosted": "2020-11-08",
- *             "author": {
- *                 "_id": "5fa44925d9d2fd1c84d6d18a",
- *                 "username": "somebody"
- *             },
- *             "__v": 0
- *         }
- *     ]
+ *     "result": {
+ *         "posts": [
+ *             {
+ *                 "published": false,
+ *                 "editedBy": [
+ *                     {
+ *                         "_id": "5fb1935573faa36ad4fcb87b",
+ *                         "username": "fooUser"
+ *                     }
+ *                 ],
+ *                 "tags": [
+ *                     "تگ",
+ *                     "برچسب"
+ *                 ],
+ *                 "is_deleted": false,
+ *                 "_id": "5fb24552371693522042d8ba",
+ *                 "title": "سلام زندگی",
+ *                 "content": "به زندگی سلام کنیم.",
+ *                 "summary": "خلاصه",
+ *                 "datePosted": "2020-11-16",
+ *                 "author": {
+ *                     "_id": "5fb1935573faa36ad4fcb87b",
+ *                     "username": "fooUser"
+ *                 },
+ *                 "__v": 0,
+ *                 "dateUpdated": "2020-11-16",
+ *                 "score": 1.375
+ *             }
+ *         ],
+ *         "pageCount": 1
+ *     }
  * }
  * 
  * @apiError (400) {Object} BadRequest Invalid parameters
- * @apiError (404) {Object} NotFound Post not found
+ * @apiError (404) {Object} NotFound No Post Found
  * @apiErrorExample NotFound
- * HTTP/1.1 404 Post Not Found
+ * HTTP/1.1 404 No Post Found
  *  {
-    "status": "error",
-    "message": {
-        "en": "No posts found.",
-        "fa": "پستی یافت نشد."
-    }
-}
+ *     "status": "error",
+ *     "message": {
+ *         "en": "No matching posts found.",
+ *         "fa": "پستی با این مشخصات یافت نشد."
+ *     }
+ * }
  */
 
 const all = async (request, response, next) => {
@@ -99,19 +90,22 @@ const all = async (request, response, next) => {
     // check auth for unpublished posts
     const user = request.header('user');
     
-    // const validationRes = validateData(data);
-    // if (!validationRes.valid)
-    // return error(response, 400, {
-    //     en: validationRes.error
-    // });
+    const validationRes = validateData(data);
+    if (!validationRes.valid)
+    return error(response, 400, {
+        en: validationRes.error
+    });
 
     const result = await service(data, user);
     
     if (result.posts[0] === undefined) return error(response, 404, {
-        en: 'No posts found.',
-        fa: 'پستی یافت نشد.'
+        en: 'No matching posts found.',
+        fa: 'پستی با این مشخصات یافت نشد.'
     });
-    return ok(response, result, {});
+    return ok(response, result, {
+        en: 'Search results:',
+        fa: 'نتیجه جست‌وجو:'
+    });
 }
 
 module.exports = all;

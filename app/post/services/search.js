@@ -40,8 +40,10 @@ const search = async (data, user)=>{
             limit: size,
             skip: (page - 1) * size
     })
+    .populate('author', 'username')
+    .populate('editedBy', 'username')
     .sort( { score: { $meta: "textScore" } } );
-    
+
     return {
         posts: posts,
         pageCount: pageCount
