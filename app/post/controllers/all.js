@@ -11,7 +11,7 @@ function validateData(data) {
 }
 
 /**
- * @api {get} /api/post All
+ * @api {get} /api/posts All
  * @apiName All
  * @apiGroup Posts
  * 

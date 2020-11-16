@@ -3,6 +3,7 @@ const fetch = require('./fetch');
 const all = require('./all');
 const update = require('./update');
 const remove = require('./remove');
+const search = require('./search');
 
 module.exports={
     create,
@@ -10,4 +11,5 @@ module.exports={
     all,
     remove,
     update,
+    search,
 }

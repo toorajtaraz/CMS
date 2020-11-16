@@ -1,3 +1,4 @@
+const { Collection } = require('mongoose');
 const {mongoose} =  require('../../../core/db/mongoose');
 
 const PostSchema = new mongoose.Schema({
@@ -15,15 +16,31 @@ const PostSchema = new mongoose.Schema({
 
 const TagSchema = new mongoose.Schema({
     // title: {type: String, required: true},
-    _id: {type: String, unique: true},
+    _id: {type: String},
     dateCreated: {type: String, required: true},
     dateModified: {type: String},
     is_deleted: {type: Boolean, default: false},
 });
+PostSchema.set('autoIndex', false)
+PostSchema.index({
+    title: "text",
+    content: "text",
+    summary: "text",
+    // '$**': 'text'
+},
+{
+    weight: {
+        title: 3, content: 1, summary: 2
+    },
+    name: "TextIndex"
+}
+);
 
 
 const Post = mongoose.model('Post', PostSchema, 'Post');
 const Tag = mongoose.model('Tag', TagSchema, 'Tag');
+
+
 
 module.exports = {
     Post,

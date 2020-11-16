@@ -12,10 +12,9 @@ const checkAccess = async(username) =>{
     ));
 };
 
-const all = async (data, user)=>{
+const search = async (data, user)=>{
     page = data.page || 1;
     size = data.size || 10;
-    sortBy = data.sortBy || 'datePosted';
     // used only if user has access to unpublished posts
     let {published = { $nin: [] }} = data;
     
@@ -24,23 +23,31 @@ const all = async (data, user)=>{
 
     const query = {
         is_deleted: false,
-        published: (hasAccess)? published : true ,
+        $text: { $search: data.searchTerms },
+        published: (hasAccess)? published : true,
         author: data.author || { $nin: [] },
-        tags: (data.tags !== undefined)? { $in: data.tags } : { $nin: [] }
+        tags: (data.tags !== undefined)? { $in: data.tags } : { $nin: [] },
     };
 
     let pageCount = await models.Post.countDocuments(query);
     pageCount = Math.ceil(pageCount/size);
 
-    const posts = await models.Post.find(query, null, {
-        sort: { [sortBy]: 1 },
-        limit: size,
-        skip: (page - 1) * size
-    }).populate('author', 'username');
+    const posts = await models.Post.find(query, 
+        {
+            score: { $meta: "textScore" },
+        },
+        {
+            limit: size,
+            skip: (page - 1) * size
+    })
+    .populate('author', 'username')
+    .populate('editedBy', 'username')
+    .sort( { score: { $meta: "textScore" } } );
+
     return {
         posts: posts,
         pageCount: pageCount
     };
 }
 
-module.exports = all;
+module.exports = search;
