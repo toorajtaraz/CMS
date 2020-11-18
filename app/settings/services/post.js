@@ -23,6 +23,10 @@ const period_accepted = async (newbackup_period_hours , newbackup_period_days) =
     return (await auth.period_is_acceptabel(newbackup_period_hours , newbackup_period_days));
 };
 
+const period_time_has_enterd = async (newbackup_period_hours , newbackup_period_days) => {
+    return (await auth.period_has_enterd(newbackup_period_hours , newbackup_period_days));
+};
+
 const period_hours_accepted = async (newbackup_period_hours) => {
     return (await auth.period_is_in_range_hours(newbackup_period_hours));
 };
@@ -61,7 +65,8 @@ module.exports = {
     initiateBR,
     period_accepted,
     period_hours_accepted,
-    period_days_accepted
+    period_days_accepted,
+    period_time_has_enterd
     
 };
 
