@@ -40,6 +40,14 @@ const postSchema = require('../schemas/post');
         }
     }
 
+ * @apiErrorExample noCollectionInSelectiveMode:
+{
+    "status": "error",
+    "message": {
+        "en": "no collections were provided.",
+        "fa": "هیچ مجموعه ای مشخص نشده بود"
+    }
+}
     */
 
 
@@ -50,7 +58,9 @@ const addToBackupQ = async (request, response, next) => {
     if (validate.failed) {
         return validate.response(response);
     }
-
+    if (validate.data.is_full === false && validate.data.collections.length === 0) {
+        return error(response, 400, { en: 'no collections were provided.', fa: 'هیچ مجموعه ای مشخص نشده بود'});
+    }
     let createdBackup = await postService.addToBackupQ(request.user._id, validate.data);
     createdBackup = createdBackup.toObject();
     delete createdBackup.__v;
