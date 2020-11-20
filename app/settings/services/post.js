@@ -18,19 +18,6 @@ const canAccess = async (password) => {
     return await auth.isPassValid(password, currentHashPass); 
 };
 
-
-const period_accepted = async (newbackup_period_hours , newbackup_period_days) => {
-    return (await auth.period_is_acceptabel(newbackup_period_hours , newbackup_period_days));
-};
-
-const period_hours_accepted = async (newbackup_period_hours) => {
-    return (await auth.period_is_in_range_hours(newbackup_period_hours));
-};
-
-const period_days_accepted = async (newbackup_period_days) => {
-    return (await auth.period_is_in_range_days(newbackup_period_hours , newbackup_period_days));
-};
-
 const updateSettings = async (id, data) => {
     const update = {last_update : Date.now()};
     if(data.newPath) {
@@ -38,12 +25,6 @@ const updateSettings = async (id, data) => {
     }
     if(data.newPassword) {
         update.passwordHash = await auth.hashPass(data.newPassword);
-    }
-    if(data.newbackup_period_hours) {
-        update.backup_period_hours = data.newbackup_period_hours;
-    }
-    if(data.newbackup_period_days) {
-        update.backup_period_days = data.newbackup_period_days;
     }
     const settings = await Settings.findOneAndUpdate({}, update);
     return  settings;
@@ -58,11 +39,7 @@ module.exports = {
     canAccess,
     banUser,
     isBanned,
-    initiateBR,
-    period_accepted,
-    period_hours_accepted,
-    period_days_accepted
-    
+    initiateBR
 };
 
 
