@@ -84,24 +84,9 @@ const updateSettings = async (request, response, next) => {
     } else if (request.user.attempts > 0) {
         await increaseAttempts(request.user._id, -1);
     }
-
     // period input message?
-    if((await postService.period_time_has_enterd (validate.data.newbackup_period_hours, validate.data.newbackup_period_days)) === false){ 
-           return error(response, 4302, { en: 'please enter a time period.', fa: 'لطفا بازه زمانی را وارد کنید'});
-
-     }
-
-     if((await postService.period_hours_accepted (validate.data.newbackup_period_hours)) === false){ 
-        return error(response, 431, { en: 'please enter period hours between 0-23.', fa: 'لطفا بازه زمانی بین 0 تا 23 ساعت وارد کنید'});
-
-     }
-
-     if((await postService.period_days_accepted (validate.data.newbackup_period_days)) === false){ 
-        return error(response, 432, { en: 'please enter period days between 0-30.', fa: 'لطفا بازه زمانی بین 0 تا 30 روز وارد کنید'});
-
-     }
-
-    
+    // if((await postService.period_hours_accepted (validate.data.newbackup_period_hours)) === fale){ }
+    //validate.data.newbackup ???
 
     let updatedSettings = await postService.updateSettings(request.user._id, validate.data);
     updatedSettings = updatedSettings.toObject();
