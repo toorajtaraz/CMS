@@ -56,15 +56,16 @@ async function isNumeric(str) {
     else return false;
   }
 
-  async function period_has_enterd(hours,days) {
-    if (!( (Number(hours)==0 && Number(days)==0) || (Number(hours)==null && Number(days)==null) )) return true;
+  async function period_time_is_not_null(hours,days) {
+    if (!isNumeric(hours) && !isNumeric(days)) return false;
+    else if (!( (Number(hours)==0 && Number(days)==0) || (Number(hours)==null && Number(days)==null) )) return true;
     else return false;
   }
 
   async function period_is_acceptabel (hours , days){
     return (await period_is_in_range_hours(hours) &&
             await period_is_in_range_days(days) &&
-            await period_has_enterd(hours , days)
+            await period_time_is_not_null(hours , days)
     );
 };
 module.exports = {
@@ -75,6 +76,6 @@ module.exports = {
     extractData,
     period_is_in_range_hours,
     period_is_in_range_days,
-    period_has_enterd,
+    period_time_is_not_null,
     period_is_acceptabel
 }
