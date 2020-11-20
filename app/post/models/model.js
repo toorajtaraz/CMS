@@ -26,7 +26,6 @@ PostSchema.index({
     title: "text",
     content: "text",
     summary: "text",
-    // '$**': 'text'
 },
 {
     weight: {
@@ -40,6 +39,7 @@ PostSchema.index({
 const Post = mongoose.model('Post', PostSchema, 'Post');
 const Tag = mongoose.model('Tag', TagSchema, 'Tag');
 
+Post.createIndexes();
 
 
 module.exports = {
