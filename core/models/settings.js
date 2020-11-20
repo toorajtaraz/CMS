@@ -12,16 +12,6 @@ const settingsSchema = new mongoose.Schema({
     passwordHash: {
         type: String,
     },
-    backup_period_hours: {
-        type: String,
-        default: '5',
-        _id: backup_period_hours
-    },
-    backup_period_days: {
-        type: String,
-        default: '1',
-        _id: backup_period_days
-    }
 });
 
 const Settings = mongoose.model('Settings', settingsSchema, 'Settings');
