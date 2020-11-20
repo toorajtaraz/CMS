@@ -84,10 +84,6 @@ const updateSettings = async (request, response, next) => {
     } else if (request.user.attempts > 0) {
         await increaseAttempts(request.user._id, -1);
     }
-    // period input message?
-    // if((await postService.period_hours_accepted (validate.data.newbackup_period_hours)) === fale){ }
-    //validate.data.newbackup ???
-
     let updatedSettings = await postService.updateSettings(request.user._id, validate.data);
     updatedSettings = updatedSettings.toObject();
     delete updatedSettings.__v;
