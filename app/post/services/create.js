@@ -3,7 +3,7 @@ const userModels = require('../../user/models/models');
 
 const checkAccess = async (username) => {
     user = (await userModels.User.find({username: username}).populate('role'))[0];
-    return ((user.role.name == 'author' || user.role.name == 'admin') && !user.is_blocked);
+    return (user.role != undefined && (user.role.name == 'author' || user.role.name == 'admin') && !user.is_blocked);
 }
 
 const create = async (data)=>{
