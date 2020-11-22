@@ -24,61 +24,72 @@ function validateData(data) {
  * 
  * @apiParamExample Request-Example:
  * {
- *    "page": 2,
- *    "size": 3,
- *    "tags": [ "tech", "tag1"],
- *    "author": "5fa514e3bfa0c645fc457884"
+ *    "page": 1
+ *    "size": 2,
+ *    "tags": [ "article", "tag1"],
+ *    "author": "5fb1935573faa36ad4fcb87b"
  * }
  * 
- * @apiSuccess (200) {Object[]} result Posts information
+ * @apiSuccess (200) {Object[]} result.posts Posts information
+ * @apiSuccess (200) {Number} result.postsCount Number of posts with current critera
  * @apiSuccess (200) {Number} result.pageCount Page count for current criteria
  * @apiSuccessExample Success-Response:
  *  {
  *     "status": "ok",
  *     "message": {
- *         "en": "Request was successful",
- *         "fa": "درخواست موفقیت آمیز بود"
+ *         "en": "Retrieved posts",
+ *         "fa": "پست‌ها دریافت شد."
  *     },
- *     "result": [
- *         {
- *             "published": true,
- *             "editedBy": [],
- *             "tags": [
- *                 "tag1",
- *                 "tag2"
- *             ],
- *             "is_deleted": false,
- *             "_id": "5fa4720f874c045138412ffa",
- *             "title": "Lorem",
- *             "content": "ipsum",
- *             "summary": "summ",
- *             "datePosted": "2020-11-08",
- *             "author": {
- *                 "_id": "5fa44925d9d2fe2c84d6d18a",
- *                 "username": "jdoe"
+ *     "result": {
+ *         "posts": [
+ *             {
+ *                 "published": true,
+ *                 "editedBy": [
+ *                     {
+ *                         "_id": "5fb1935573faa36ad4fcb87b",
+ *                         "username": "fooUser"
+ *                     }
+ *                 ],
+ *                 "tags": [
+ *                     "tag1",
+ *                     "article"
+ *                 ],
+ *                 "is_deleted": false,
+ *                 "_id": "5fb7ab8e38246f3e7805005b",
+ *                 "title": "Lorem Ipsum",
+ *                 "content": "Dolor sit.",
+ *                 "summary": null,
+ *                 "datePosted": "2020-11-20",
+ *                 "author": {
+ *                     "_id": "5fb1935573faa36ad4fcb87b",
+ *                     "username": "fooUser"
+ *                 },
+ *                 "__v": 0,
+ *                 "dateUpdated": "2020-11-22"
  *             },
- *             "__v": 0
- *         },
- *         {
- *             "published": true,
- *             "editedBy": [],
- *             "tags": [
- *                 "tag1",
- *                 "tag2"
- *             ],
- *             "is_deleted": false,
- *             "_id": "5fa5b8d39630ff57c4638e96",
- *             "title": "Lorem",
- *             "content": "Interdum et malesuada fames ac ante ipsum primis in faucibus. Quisque fermentum justo neque.",
- *             "summary": "a few words of summary",
- *             "datePosted": "2020-11-08",
- *             "author": {
- *                 "_id": "5fa44925d9d2fd1c84d6d18a",
- *                 "username": "somebody"
- *             },
- *             "__v": 0
- *         }
- *     ]
+ *             {
+ *                 "published": false,
+ *                 "editedBy": [],
+ *                 "tags": [
+ *                     "tag1",
+ *                     "tag2"
+ *                 ],
+ *                 "is_deleted": false,
+ *                 "_id": "5fb7ab9538246f3e7805005c",
+ *                 "title": "Ipsum Lorem",
+ *                 "content": "Quick brown fox jumped over sth.",
+ *                 "summary": "a few words",
+ *                 "datePosted": "2020-11-20",
+ *                 "author": {
+ *                     "_id": "5fb1935573faa36ad4fcb87b",
+ *                     "username": "fooUser"
+ *                 },
+ *                 "__v": 0
+ *             }
+ *         ],
+ *         "pageCount": 2,
+ *         "postsCount": 3
+ *     }
  * }
  * 
  * @apiError (400) {Object} BadRequest Invalid parameters
@@ -111,7 +122,10 @@ const all = async (request, response, next) => {
         en: 'No posts found.',
         fa: 'پستی یافت نشد.'
     });
-    return ok(response, result, {});
+    return ok(response, result, {
+        en: 'Retrieved posts',
+        fa: 'پست‌ها دریافت شد.'
+    });
 }
 
 module.exports = all;

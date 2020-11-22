@@ -26,7 +26,8 @@ function validateData(data) {
  *    "sortBy": "_id"
  * }
  * 
- * @apiSuccess (200) {Object[]} result Tags information
+ * @apiSuccess (200) {Object[]} result.tags Tags information
+ * @apiSuccess (200) {Number} result.postsCount Number of posts with current critera
  * @apiSuccess (200) {Number} result.pageCount Page count for current criteria
  * @apiSuccessExample Success-Response:
  *  {
@@ -39,27 +40,21 @@ function validateData(data) {
  *         "tags": [
  *             {
  *                 "is_deleted": false,
- *                 "_id": "tag2",
+ *                 "_id": "tag1",
  *                 "dateCreated": "2020-11-10",
  *                 "dateModified": "2020-11-10",
  *                 "__v": 0
  *             },
  *             {
  *                 "is_deleted": false,
- *                 "_id": "tag3",
- *                 "dateCreated": "2020-11-13",
- *                 "dateModified": "2020-11-13",
- *                 "__v": 0
- *             },
- *             {
- *                 "is_deleted": false,
- *                 "_id": "tag4",
- *                 "dateCreated": "2020-11-13",
- *                 "dateModified": "2020-11-13",
+ *                 "_id": "tag2",
+ *                 "dateCreated": "2020-11-10",
+ *                 "dateModified": "2020-11-10",
  *                 "__v": 0
  *             }
  *         ],
- *         "pageCount": 4
+ *         "postsCount": 12,
+ *         "pageCount": 6
  *     }
  * }
  * 

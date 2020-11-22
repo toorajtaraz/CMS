@@ -9,8 +9,8 @@ const all = async (data)=>{
         is_deleted: false
     };
 
-    let pageCount = await models.Tag.countDocuments(query);
-    pageCount = Math.ceil(pageCount/size);
+    const postsCount = await models.Tag.countDocuments(query);
+    const pageCount = Math.ceil(postsCount/size);
 
     const tags = await models.Tag.find(query, null, {
         sort: { [sortBy]: 1 },
@@ -19,7 +19,8 @@ const all = async (data)=>{
     });
     return {
         tags: tags,
-        pageCount: pageCount
+        postsCount: postsCount,
+        pageCount: pageCount,
     };
 }
 
