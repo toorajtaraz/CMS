@@ -19,7 +19,7 @@ const all = async (data)=>{
     });
     return {
         tags: tags,
-        postsCount: postsCount,
+        tagsCount: postsCount,
         pageCount: pageCount,
     };
 }

@@ -27,7 +27,7 @@ function validateData(data) {
  * }
  * 
  * @apiSuccess (200) {Object[]} result.tags Tags information
- * @apiSuccess (200) {Number} result.postsCount Number of posts with current critera
+ * @apiSuccess (200) {Number} result.tagsCount Number of posts with current critera
  * @apiSuccess (200) {Number} result.pageCount Page count for current criteria
  * @apiSuccessExample Success-Response:
  *  {
@@ -53,7 +53,7 @@ function validateData(data) {
  *                 "__v": 0
  *             }
  *         ],
- *         "postsCount": 12,
+ *         "tagsCount": 12,
  *         "pageCount": 6
  *     }
  * }
