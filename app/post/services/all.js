@@ -7,9 +7,9 @@ const checkAccess = async(username) =>{
         user.role !== undefined && (
         user.role.name == 'author' || 
         user.role.name == 'admin' || 
-        user.role.name == 'editor' && 
+        user.role.name == 'editor') && 
         !user.is_blocked
-    ));
+    );
 };
 
 const all = async (data, user)=>{
@@ -29,17 +29,20 @@ const all = async (data, user)=>{
         tags: (data.tags !== undefined)? { $in: data.tags } : { $nin: [] }
     };
 
-    let pageCount = await models.Post.countDocuments(query);
-    pageCount = Math.ceil(pageCount/size);
+    // gets number of total posts and pages
+    // by current filters
+    const postsCount = await models.Post.countDocuments(query);
+    const pageCount = Math.ceil(postsCount/size);
 
     const posts = await models.Post.find(query, null, {
         sort: { [sortBy]: 1 },
         limit: size,
         skip: (page - 1) * size
-    }).populate('author', 'username');
+    }).populate('author', 'username').populate('editedBy', 'username');
     return {
         posts: posts,
-        pageCount: pageCount
+        pageCount: pageCount,
+        postsCount: postsCount
     };
 }
 

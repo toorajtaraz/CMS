@@ -15,26 +15,26 @@ const mongoose = require('mongoose');
  *  {
  *     "status": "ok",
  *     "message": {
- *         "en": "Request was successful",
- *         "fa": "درخواست موفقیت آمیز بود"
+ *         "en": "Post retrieved.",
+ *         "fa": "پست دریافت شد."
  *     },
  *     "result": [
  *         {
- *             "published": true,
+ *             "published": false,
  *             "editedBy": [],
  *             "tags": [
  *                 "tag1",
  *                 "tag2"
  *             ],
  *             "is_deleted": false,
- *             "_id": "5fa4720f874c045138412ffa",
- *             "title": "Lorem",
- *             "content": "ipsum",
- *             "summary": "summ",
- *             "datePosted": "2020-11-08",
+ *             "_id": "5fb7ab9e38246f3e7805005d",
+ *             "title": "Brown Fox",
+ *             "content": "Dolor sit.",
+ *             "summary": null,
+ *             "datePosted": "2020-11-20",
  *             "author": {
- *                 "_id": "5fa44925d9d2a3ec84d6d18a",
- *                 "username": "jdoe"
+ *                 "_id": "5fb1935573faa36ad4fcb87b",
+ *                 "username": "fooUser"
  *             },
  *             "__v": 0
  *         }
@@ -78,7 +78,10 @@ const fetch = async (request, response, next) => {
         en: 'Post not found.',
         fa: 'پست یافت نشد.'
     });
-    return ok(response, post, {});
+    return ok(response, post, {
+        en: 'Post retrieved.', 
+        fa: 'پست دریافت شد.'
+    });
 }
 
 module.exports = fetch;

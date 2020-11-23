@@ -7,9 +7,9 @@ const checkAccess = async(username) =>{
         user.role !== undefined && (
         user.role.name == 'author' || 
         user.role.name == 'admin' || 
-        user.role.name == 'editor' && 
+        user.role.name == 'editor') && 
         !user.is_blocked
-    ));
+    );
 };
 
 const search = async (data, user)=>{
