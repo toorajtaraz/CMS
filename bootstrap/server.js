@@ -4,6 +4,7 @@ process.env.NODE_CONFIG_DIR = `${BASEDIR}/config`;
 const fs = require('fs');
 const express = require('express');
 const userModel = require('../app/user/models/models');
+const adModel = require('../app/ads/models/model');
 
 const init = require('./init');
 const app = express();
@@ -32,6 +33,7 @@ const start =  async () => {
     await (new userModel.Role({name: "admin", is_deleted: false})).save();
     await (new userModel.Role({name: "author", is_deleted: false})).save();
     await (new userModel.Role({name: "editor", is_deleted: false})).save();
+    // await (new adModel.Type({name:'type1', cost: 1000})).save();
 
     handler.run(app);
     rbd.run();
