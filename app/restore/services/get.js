@@ -2,7 +2,7 @@ const { Restore } = require('../../../core/models/restore');
 
 const getAll = async (params, size, page) => {
     const offset = (parseInt(page) - 1) * parseInt(size), limit = parseInt(size);
-    const filter = {};
+    const filter = {state: { $not: { $eq: -100} } };
     if (params.state != undefined) {
         filter.state = params.state;
     }
@@ -27,7 +27,7 @@ const getAll = async (params, size, page) => {
 };
 
 const countAll = async (params) => {
-    const filter = {};
+    const filter = {state: { $not: { $eq: -100} } };
     if (params.state != undefined) {
         filter.state = params.state;
     }
