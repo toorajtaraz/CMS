@@ -6,7 +6,7 @@ const allCollections = JSON.parse(
 );
 console.log(allCollections);
 const backup = (config, _tar=tar) => {
-    const {uri, root, collections, callback, tar} = config;
+    const {uri, root, collections, callback, tar, addToRoot} = config;
     const backupProcess = spawn(__dirname + '/../scripts/multipleColDump.sh', [
         collections ? collections.join(' ') : allCollections.join(' '),
         root + '/dump',
@@ -24,10 +24,11 @@ const backup = (config, _tar=tar) => {
             return;
         }
         _tar.create({
-            file: root + tar,
+            file: './backups/' + addToRoot + tar,
             preservePaths: true,
+            C: root
         }, [
-            root + '/dump',
+            'dump',
         ], (err)=>{
             if (err) {
                 console.log('something went wrong');
@@ -42,7 +43,10 @@ const backup = (config, _tar=tar) => {
 
 const restore = (config, _tar=tar) => {
     const {uri, root, collections, callback, tar} = config;
-    _tar.extract({file: root + tar, preservePaths: true}).then(()=>{
+    const extracted = _tar.extract({file: process.cwd() + '/toBeRestored/' + tar, cwd: process.cwd() + '/toBeRestored/'}, (err)=>{
+        if (err) {
+            return callback(err);
+        }
         const restoreProcess = spawn('mongorestore', [
             '--authenticationDatabase=test',
             '--drop',
@@ -51,12 +55,12 @@ const restore = (config, _tar=tar) => {
         ]);
         restoreProcess.on('exit', (code, signal) => {
             if (code) {
-                console.log(code);
+                console.log('spawn restore went wrong  code = ' + code);
                 callback(code);
                 return;
             }
             if (signal) {
-                console.log(signal);
+                console.log('spawn restore went wrong  signal = ' + signal);
                 callback(signal);
                 return;
             }
