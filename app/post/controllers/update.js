@@ -12,7 +12,7 @@ function validateData(data) {
 }
 
 /**
- * @api {put} /api/posts Update
+ * @api {put} /api/posts/:id Update
  * @apiName Update
  * @apiGroup Posts
  * 

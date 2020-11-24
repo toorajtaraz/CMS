@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 
 
 /**
- * @api {get} /api/post/:id Fetch
+ * @api {get} /api/posts/:id Fetch
  * @apiName Fetch
  * @apiGroup Posts
  * 

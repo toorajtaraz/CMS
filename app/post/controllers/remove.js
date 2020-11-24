@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 
 /**
- * @api {delete} /api/post/:id Remove
+ * @api {delete} /api/posts/:id Remove
  * @apiName Remove
  * @apiGroup Posts
  * 
