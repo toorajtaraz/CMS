@@ -13,6 +13,10 @@ async function  backupRestoreDeamon() {
 async function callbackForBackup(err=null) {
     const onGoingBackup = await Backup.findOne({state: 1});
     onGoingBackup.state = err ? -10 : 2;
+    if (err) {
+        onGoingBackup.downloadLinkTar = '';
+        onGoingBackup.downloadLinkZip = '';
+    }
     await onGoingBackup.save();
     await handleBackupQ();
 }
