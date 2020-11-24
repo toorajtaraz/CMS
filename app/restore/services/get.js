@@ -6,14 +6,14 @@ const getAll = async (params, size, page) => {
     if (params.state != undefined) {
         filter.state = params.state;
     }
-    if (params.s_date != undefined) {
-        if (params.e_date != undefined) {
+    if (params.s_date != undefined && params.s_date != "undefined" ) {
+        if (params.e_date != undefined && params.e_date != "undefined") {
             filter.date = { $gt : new Date(params.s_date).toISOString() , $lt : new Date(params.e_date).toISOString() };
         } else {
             filter.date = { $gt : new Date(params.s_date).toISOString() };            
         }
     } else {
-        if (params.e_date != undefined) {
+        if (params.e_date != undefined && params.e_date != "undefined") {
             filter.date = {$lt : new Date(params.e_date).toISOString() };
         }
     }
@@ -31,14 +31,14 @@ const countAll = async (params) => {
     if (params.state != undefined) {
         filter.state = params.state;
     }
-    if (params.s_date != undefined) {
-        if (params.e_date != undefined) {
+    if (params.s_date != undefined && params.s_date != "undefined" ) {
+        if (params.e_date != undefined && params.e_date != "undefined") {
             filter.date = { $gt : new Date(params.s_date).toISOString() , $lt : new Date(params.e_date).toISOString() };
         } else {
             filter.date = { $gt : new Date(params.s_date).toISOString() };            
         }
     } else {
-        if (params.e_date != undefined) {
+        if (params.e_date != undefined && params.e_date != "undefined") {
             filter.date = {$lt : new Date(params.e_date).toISOString() };
         }
     }
