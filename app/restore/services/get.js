@@ -8,13 +8,13 @@ const getAll = async (params, size, page) => {
     }
     if (params.s_date != undefined) {
         if (params.e_date != undefined) {
-            filter.date = { $gt : params.s_date , $lt : params.e_date };
+            filter.date = { $gt : new Date(params.s_date).toISOString() , $lt : new Date(params.e_date).toISOString() };
         } else {
-            filter.date = { $gt : params.s_date };            
+            filter.date = { $gt : new Date(params.s_date).toISOString() };            
         }
     } else {
         if (params.e_date != undefined) {
-            filter.date = {$lt : params.e_date};
+            filter.date = {$lt : new Date(params.e_date).toISOString() };
         }
     }
     const restores = await Restore.find(filter).skip(offset).limit(limit);
@@ -33,13 +33,13 @@ const countAll = async (params) => {
     }
     if (params.s_date != undefined) {
         if (params.e_date != undefined) {
-            filter.date = { $gt : params.s_date , $lt : params.e_date };
+            filter.date = { $gt : new Date(params.s_date).toISOString() , $lt : new Date(params.e_date).toISOString() };
         } else {
-            filter.date = { $gt : params.s_date };            
+            filter.date = { $gt : new Date(params.s_date).toISOString() };            
         }
     } else {
         if (params.e_date != undefined) {
-            filter.date = {$lt : params.e_date};
+            filter.date = {$lt : new Date(params.e_date).toISOString() };
         }
     }
     return await Restore.countDocuments(filter);
