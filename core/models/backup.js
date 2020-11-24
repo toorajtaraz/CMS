@@ -30,6 +30,10 @@ const backupSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
+    is_automated: {
+        type: Boolean,
+        default: false
+    }
 });
 
 const Backup = mongoose.model('Backup', backupSchema, 'Backup');
