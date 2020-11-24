@@ -9,6 +9,11 @@ const settingsSchema = new mongoose.Schema({
         type: Date,
         default: Date.now(),
     },
+    collections: [
+        {
+            type: String
+        }
+    ],
     passwordHash: {
         type: String,
     },

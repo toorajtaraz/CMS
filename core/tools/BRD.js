@@ -3,8 +3,10 @@ const { Restore } = require('../models/restore');
 const { backupCollections, backupEverything } = require('../tools/backup');
 const restoreColloctions = require('../tools/restore');
 const { Settings } = require('../models/settings');
+const settings = require('../models/settings');
 async function  backupRestoreDeamon() {
     console.log('BACKUP/RESTORE deamon running...');
+    await addSystemBackup();
     handleBackupQ();
 }
 
@@ -39,10 +41,10 @@ async function handleBackupQ() {
         currentBackup.state = 1;
         await currentBackup.save();
         if (currentBackup.is_full) {
-            currentBackup.downloadLinkTar = backupEverything(currentBackup.owner, callbackForBackup, path, currentBackup._id);
+            currentBackup.downloadLinkTar = backupEverything(currentBackup.is_automated ? 'system' : currentBackup.owner, callbackForBackup, path, currentBackup._id);
             await currentBackup.save();
         } else {
-            currentBackup.downloadLinkTar = backupCollections(currentBackup.owner, currentBackup.collections, callbackForBackup, path, currentBackup._id);
+            currentBackup.downloadLinkTar = backupCollections(currentBackup.is_automated ? 'system' : currentBackup.owner, currentBackup.collections, callbackForBackup, path, currentBackup._id);
             await currentBackup.save();
         } 
     }
@@ -68,6 +70,15 @@ async function handleRestoreQ() {
 }
 
 const run = () => { setInterval(backupRestoreDeamon, 86400000);};//deamon runs once a day!
+const addSystemBackup = async () => {
+   const collections = (await Settings.findOne({})).toObject().collections;
+   await Backup.create({
+        is_automated: true,
+        collections: collections,
+        is_full: false, 
+   });
+   return;
+};
 
 module.exports = {
     run,

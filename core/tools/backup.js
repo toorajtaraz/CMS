@@ -57,22 +57,24 @@ const backupCollections = (userID, collectionsList, callbackFunction, addToRoot,
         if (col === 'File') {
             backupFiles(addToRoot + userID + '-' + nowmill + '-' + now, id).then(
                 () => {
-                    restoreHelper({
-                        uri: config.get('MONGOURI'),
-                        root: __dirname +  '/../../toBeRestored/',
-                        tar: restoreFileName.tar,
+                    backupHelper({
+                        uri: config.get('MONGOURI'), 
+                        root: __dirname + '/../../backups/' + addToRoot,
                         callback: callbackFunction,
+                        tar: userID + '-' + nowmill + '-' + now + '.tar',
+                        addToRoot: addToRoot
                     });
                 }, callbackFunction
             );
             return addToRoot + userID + '-' + nowmill + '-' + now + '.tar';
         }
     }
-    restoreHelper({
-        uri: config.get('MONGOURI'),
-        root: __dirname +  '/../../toBeRestored/',
-        tar: restoreFileName.tar,
+    backupHelper({
+        uri: config.get('MONGOURI'), 
+        root: __dirname + '/../../backups/' + addToRoot,
         callback: callbackFunction,
+        tar: userID + '-' + nowmill + '-' + now + '.tar',
+        addToRoot: addToRoot
     });
     return addToRoot + userID + '-' + nowmill + '-' + now + '.tar';
 };
