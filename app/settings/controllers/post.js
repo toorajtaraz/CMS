@@ -28,6 +28,7 @@ const { increaseAttempts } = require('../../user/services/attempts');
  * @apiParam {String} password settings password (REQUIRED)
  * @apiParam {String} newPassword updates settings password 
  * @apiParam {String} newPath new sand boxed path to store backups 
+ * @apiParam {Array} collections array of strings which are name of collections that automated backup will take care of.
  * @apiSuccessExample {json} success-response-update:
 {
     "status": "ok",
@@ -36,8 +37,12 @@ const { increaseAttempts } = require('../../user/services/attempts');
         "fa": "تنظیمات با موفقیت به روزرسانی شد"
     },
     "result": {
-        "sandBoxedPath": "",
-        "last_update": "2020-11-14T19:49:36.189Z",
+        "sandBoxedPath": "testpath/innerTestPath",
+        "last_update": "2020-11-24T16:57:51.116Z",
+        "collections": [
+            "Role",
+            "Post"
+        ],
         "_id": "5fb02e468a6dea27eafe4c28"
     }
 }
