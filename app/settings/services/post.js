@@ -26,7 +26,8 @@ const updateSettings = async (id, data) => {
     if(data.newPassword) {
         update.passwordHash = await auth.hashPass(data.newPassword);
     }
-    const settings = await Settings.findOneAndUpdate({}, update);
+    let settings = await Settings.findOneAndUpdate({}, update);
+    settings = await Settings.findOne();
     return  settings;
 };
 
