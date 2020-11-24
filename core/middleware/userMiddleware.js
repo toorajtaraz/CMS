@@ -12,7 +12,7 @@ const identifyUser = async (req, res, next) => {
             },
         });
     }
-    const user = await models.User.findOne({username: username, is_deleted: false}).populate('role');
+    let user = await models.User.findOne({username: username, is_deleted: false}).populate('role');
     if (!user || !user.role) {
         return res.status(401).send({
             status: "error",
@@ -22,9 +22,10 @@ const identifyUser = async (req, res, next) => {
             },
         });
     }
+    user = user.toObject();
+    user.role = user.role.name;
     req.user = user;
-    req.user.role = user.role.name;
-    next();
+    return next();
 };
 
 module.exports = identifyUser;

@@ -6,7 +6,7 @@ const cors = require('cors');
 const { errorHandler } = require('./tools/handleError');
 const express = require('express');
 const identifyUser = require('./middleware/userMiddleware');
-
+const identifyAdmin = require('./middleware/checkSuperUser');
 
 
 exports.init = (app, router, connection) => {
@@ -24,6 +24,10 @@ exports.init = (app, router, connection) => {
     app.use('/api/restore', identifyUser);
     app.use('/api/backup', identifyUser);
 
+    //checking admin access
+    app.use('/api/backup', identifyAdmin);
+    app.use('/api/restore', identifyAdmin);
+    app.use('/api/settings', identifyAdmin);
 
     app.use('/api', router);
     app.get('/apidoc', (req, res) => {
@@ -34,7 +38,8 @@ exports.init = (app, router, connection) => {
 exports.run = (app) => {
     console.log(`*** ${String(config.get('LEVEL')).toUpperCase()} ***`);
 
-    app.use(express.static(path.join(__dirname, '../apidoc'), { fallthrough: false }));
+    app.use('/doc', express.static(path.join(__dirname, '../apidoc'), { fallthrough: false }));
+    app.use('/backups', express.static(path.join(__dirname, '../backups'), { fallthrough: false }));
     app.use(errorHandler);
     app.listen(config.get('PORT'), () => {
         console.log(`server is running on port ${config.get('PORT')}`);
