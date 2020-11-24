@@ -5,20 +5,19 @@ const getService = require('../services/get');
  * @apiName getSettings
  * @apiGroup Settings
  * @apiSuccessExample success_getting_settings:
- {
+{
     "status": "ok",
     "message": {
-        "en": "settings successfully updated",
-        "fa": "تنظیمات با موفقیت به روزرسانی شد"
+        "en": "Current Settings",
+        "fa": "تنظیمات فعلی"
     },
     "result": {
         "sandBoxedPath": "testpath/innerTestPath",
-        "last_update": "2020-11-24T16:40:50.256Z",
+        "last_update": "2020-11-24T16:57:51.116Z",
         "collections": [
             "Role",
             "Post"
-        ],
-        "_id": "5fb02e468a6dea27eafe4c28"
+        ]
     }
 }
     */
