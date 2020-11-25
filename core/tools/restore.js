@@ -7,14 +7,14 @@ const fs = require('fs');
 
 const restore = (adminUser, callbackFunction, restoreFileName) => {
     if (restoreFileName.hasZip) {
-        fs.rmdir(__dirname + '/../static', { recursive: true, force: true }, (err) => {
+        fs.rmdir(process.cwd() + '/static', { recursive: true, force: true }, (err) => {
             if (err) {
                 console.log("unpacking static dir went wrong!");
                 callbackFunction(err);
                 return;
             }
             fs.createReadStream(restoreFileName.zip)
-                .pipe(unzipper.Extract({ path: __dirname + '/../../static' }))
+                .pipe(unzipper.Extract({ path: process.cwd() + '/static' }))
                 .promise()
                 .then(
                     () => {
