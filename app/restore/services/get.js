@@ -21,6 +21,7 @@ const getAll = async (params, size, page) => {
 
     for (let i = 0; i < restores.length; i += 1) {
         restores[i] = restores[i].toObject();
+        restores[i].date = restores[i].date.toLocaleString();
         delete restores[i].__v;
     }
     return restores;

@@ -16,7 +16,7 @@ const backupSchema = new mongoose.Schema({
     },
     date: {
         type: Date,
-        default: Date.now(),
+        default: new Date().toUTCString(),
     },
     downloadLinkTar: {
         type: String,

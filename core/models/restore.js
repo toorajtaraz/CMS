@@ -26,7 +26,7 @@ const restoreSchema = new mongoose.Schema({
     },
     date: {
         type: Date,
-        default: Date.now(),
+        default: new Date().toUTCString(),
     },
     owner: {
         type: mongoose.Schema.Types.ObjectId,

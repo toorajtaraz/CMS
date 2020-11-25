@@ -63,6 +63,7 @@ const addToBackupQ = async (request, response, next) => {
     }
     let createdBackup = await postService.addToBackupQ(request.user._id, validate.data);
     createdBackup = createdBackup.toObject();
+    createdBackup.date = createdBackup.date.toLocaleString();
     delete createdBackup.__v;
     return ok(response, createdBackup, {
         en: 'backup successfully added to backup Q',

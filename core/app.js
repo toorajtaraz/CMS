@@ -10,6 +10,8 @@ const identifyAdmin = require('./middleware/checkSuperUser');
 
 
 exports.init = (app, router, connection) => {
+    process.env.TZ = 'Asia/Tehran';
+    console.log("" + new Date());
     app.use(bodyParser.json())
         .use(bodyParser.urlencoded({extended:false}));
     app.use('/api/restore/upload' ,fileUpload({

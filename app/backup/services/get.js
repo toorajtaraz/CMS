@@ -26,6 +26,7 @@ const getAll = async (params, size, page) => {
 
     for (let i = 0; i < backups.length; i += 1) {
         backups[i] = backups[i].toObject();
+        backups[i].date = backups[i].date.toLocaleString();
         delete backups[i].__v;
         if (backups[i].downloadLinkTar != '') {
             backups[i].downloadLinkTar = config.get('URL') + backups[i].downloadLinkTar;

@@ -66,6 +66,7 @@ const addToRestoreQ = async (request, response, next) => {
     }
     let createdRestore = await postService.addToRestoreQ(request.user._id, validate.data);
     createdRestore = createdRestore.toObject();
+    createdRestore.date = createdRestore.date.toLocaleString();
     delete createdRestore.__v;
     return ok(response, createdRestore, {
         en: 'restore successfully added to restore Q',
